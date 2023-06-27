@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Principal Form{% endblock %}
+{% block body %}
+<section id="principal-body">
+    <div class="principal-form">
+        <img alt="" class="avatar" src="/static/Images/user_avatar.png">
+        <h2>Registration Form</h2>
+        <form action="{% url 'users:user_principal' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</section>
+{% endblock %}

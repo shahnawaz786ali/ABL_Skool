@@ -1,0 +1,19 @@
+.navbar{
+    /* background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/static/Images/background/big/4.jpg")no-repeat center center fixed; */
+    background-color: #20668f;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container-fluid .navbar-brand img{
+    height:50px; 
+    width:200px;
+    padding-right: 50px;
+    margin-left: 100px;
+}
+
+.container-fluid  #auth{
+    margin-right: 50px;
+}

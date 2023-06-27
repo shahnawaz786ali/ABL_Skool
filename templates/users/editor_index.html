@@ -1,0 +1,89 @@
+{% extends 'base.html'%}
+{% block body %}
+<div class="row m-3">
+    <div class="col">
+        <div class="d-flex justify-content-between mb-2 bg-dark rounded p-2">
+            <div class="col col-lg-12 w-25">
+                <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                <select class="form-select" id="autoSizingSelect">
+                    <option selected>Choose...</option>
+                    <option value="Python">Python</option>
+                    <option value="Cpp">Cpp</option>
+                    <option value="Java">Java</option>
+                </select>
+            </div>
+            <div>
+                <button type="button" class="btn btn-success">ABL Editor</button>
+                <button type="button" id="run" class="btn btn-success"><i
+                        class="fa fa-solid fa-play"></i></button>
+            </div>
+        </div>
+        <textarea type="text" id="editor" class="form-control" aria-label="First
+            name">
+        </textarea>
+    </div>
+    <div class="col d-flex flex-column rounded bg-dark mx-4">
+        <div class="h-50">
+            <label for="Input" class="text-light mt-4 mb-2">Input</label>
+            <textarea type="text" id="input" class="form-control h-75"
+                aria-label="First name"></textarea>
+        </div class="h-50">
+        <div class="h-50">
+            <label for="Output" class="text-light mb-2">Output</label>
+            <textarea type="text" id="output" class="form-control h-75"
+                aria-label="First name"></textarea>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+            mode: "text/x-c++src",
+            theme: "dracula",
+            lineNumbers: true,
+            autoCloseBrackets: true,
+    
+        })
+        var width = window.innerWidth
+        var input = document.getElementById("input")
+        var output = document.getElementById("output")
+        var run = document.getElementById("run")
+        editor.setSize(0.7 * width, "500")
+
+        var option=document.getElementById("autoSizingSelect")
+        option.addEventListener("change", function(){
+            if(option.value=="Java"){
+                editor.setOption("mode","text/x-java")
+            }
+            if(option.value=="Python"){
+                editor.setOption("mode","text/x-python")
+            }
+            if(option.value=="Cpp"){
+                editor.setOption("mode","text/x-c++src")
+            }
+        })
+        var code;
+    run.addEventListener("click", async function () {
+        code = {
+            code: editor.getValue(),
+            input: input.value,
+            lang: option.value
+        }
+        console.log(code)
+        var oData = await fetch("http://127.0.0.1:8000/editor_index/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(code)
+        })
+        var d = await oData.json()
+        output.value = d.output
+    })
+    </script>
+{% endblock %}
+
+<!-- </body>
+</html> -->

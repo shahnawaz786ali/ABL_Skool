@@ -1,0 +1,21 @@
+.previous {
+    background-color: green;
+    color: black;
+    font-size: 50px;
+  }
+  
+  .next {
+    background-color: green;
+    color: black;
+    font-size: 50px;
+  }
+  
+  .round {
+    border-radius: 100%;
+  }
+
+a{
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+  }

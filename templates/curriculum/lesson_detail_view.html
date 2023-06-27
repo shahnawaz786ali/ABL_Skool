@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load social_share %}
+
+{% block title %} {{lessons.name}} {% endblock %}
+
+{% block image_block %}
+<header class="info-header">
+  <div id="page-intro" class="container-fluid d-flex align-items-center justify-content-center ">
+    <div class="row d-flex justify-content-center text-center">
+      <div class="col-md-10 text-white">
+        <!-- heading -->
+        <h3 class="display-4 font-weight-bold  p-5 " style="color:#ff5722;" >Ch-{{lessons.position}}: {{lessons.name}}</h3>
+        <div class="row d-flex justify-content-center text-center">
+          <ul class="breadcrumb">
+            <li><a href="{% url 'users:index' %}">Home</a></li>
+            <li><a href="{% url 'curriculum:standard_list' %}">Curriculum</a></li>
+            <li><a href="{% url 'curriculum:subject_list' slug=lessons.Standard.slug %}">{{lessons.Standard.name}}</a></li>
+            <li><a href="{% url 'curriculum:lesson_list' standard=lessons.Standard.slug slug=lessons.subject.slug %}">{{lessons.subject.name}}</a></li>
+            <li class="disabled-text" >{{lessons.name}}</li>
+          </ul>
+        </div>
+
+        <!-- divider -->
+        <hr style="color:#ff5722;">
+
+        <!-- description -->
+        <h4 class="white-text my-4">ABL Education leverages its intelligently curated technology tools & learning
+          resources to foster 21st-century skills.</h4>
+  </div>
+</header>
+{% endblock %}
+
+{% block body %}
+<section class="text-center">
+    <h2 class="mb-3 mt-5 font-weight-bold" style="color:#ff5722;">Lecture Details</h2>
+    <div class="row d-flex justify-content-center mb-3">
+      <blockquote class="blockquote mt-0">
+        <footer class="blockquote-footer">Created by <cite title="Source Title">{{lessons.created_by}}</cite></footer>
+        </blockquote>
+    </div>
+    <div class="row d-flex justify-content-center mb-3 mt-3">
+      <div class="row" >
+        <div class="col col-md-6" >
+          {% post_to_whatsapp object_or_url %}
+        </div>
+        <div class="col col-md-6">
+          {% post_to_facebook object_or_url%}
+        </div>
+      </div>
+      <div class="row d-flex justify-content-evenly">
+        <div class="col-md-3">
+            <div class="card card-std text-center w-100 ">
+                <div class="card-header cardgrad1 text-white">
+                    <div class="row">
+                        <div class="col-3" >
+                          <i class="fa fa-file-text fa-4x mt-2" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-9">
+                            <h4 class="my-4">Prerequisite</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <center>
+                        <a href="{{lessons.ppt.url}} " target="_blank"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Get Files</span> &nbsp; <i
+                                    class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button></a>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card card-std text-center w-100 ">
+              <div class="card-header cardgrad1 text-white ">
+                  <div class="row">
+                      <div class="col-3" >
+                          <i class="fa fa-book-reader fa-4x mt-2"></i>
+                      </div>
+                      <div class="col-9">
+                          <h4 class="my-4">Assessment</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-footer">
+                  <center>
+                      <a href="{{lessons.Notes.url}} " target="_blank"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Assess yourself</span> &nbsp; <i
+                                  class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button></a>
+                  </center>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card card-std text-center w-100 ">
+            <div class="card-header cardgrad1 text-white ">
+                <div class="row">
+                    <div class="col-3" >
+                      <i class="fa fa-play-circle fa-4x mt-2" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-9">
+                        <h4 class="my-4">Video</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <center>
+                    <a href="{{lessons.video.url}} " target="_blank"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Watch Lesson</span> &nbsp; <i
+                                class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button></a>
+                </center>
+            </div>
+        </div>
+    </div>
+      </div> 
+                {% comment %} <div class="col-md-3 mb-4 mt-4">
+                  <div class="card box-shadow-hover text-white bg-dark" style="border-radius:20%;">
+                    <div class="card-body">
+                      <h5 class="card-title">Prerequisites</h5>
+                      {% if lessons.ppt %}
+                      <p class="card-text">Prerequisite for smooth learning</p>
+                      <a href="{{lessons.ppt.url}} " target="_blank">
+                      <button type="button" class="button-les"><span>Get Files</span></button>
+                      </a>
+                      
+                      {% else %}
+                      <p class="card-text" > No prerequisite available</p>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </div>
+               <div class="col-md-3 mb-4 mt-4">
+                  <div class="card box-shadow-hover text-white bg-dark" style="border-radius:20%;">
+                    <div class="card-body">
+                      <h5 class="card-title">Assessment</h5>
+                      <p class="card-text">Check your learning</p>
+                      <a href="{{lessons.ppt.url}}" target="_blank">
+                        <button type="button" class="button-les" ><span >Get Files</span></button>
+                      </a>
+                    </div>
+                  </div>
+                </div> 
+               <div class="col-md-3 mb-4 mt-4 video">
+                  <div class="card box-shadow-hover text-white bg-dark" style="border-radius:20%;">
+                    <div class="card-body">
+                      <h5 class="card-title">Watch Lesson</h5>
+                      <p class="card-text">Start your learning</p>
+                      <a href="{{lessons.video.url}}">
+                      <button type="button" class="button-les" ><span >Get Files</span></button>
+                      </a>
+                    </div>
+                  </div>
+                </div> {% endcomment %}
+    </div>
+</section>
+
+<hr class="my-5" style="color:#ff5722;">
+
+<!-- Comments section -->
+<section >
+    {% comment %} <h2 class="mb-4 mt-5 font-weight-bold" style="color:#ff5722;">Questions And Queries</h2> {% endcomment %}
+    <h4 class="mt-2 font-weight-bold" style="color:#ff5722;">Post your comment or question below:</h4>
+    <br><br>
+    <div class="container row">
+      <div class="col-md-6">
+                              <form method="post">
+                                    <div class="form-group">
+                                    {% csrf_token %}
+                                    {{form}}
+                                    <input type="submit" name="form" value="Add Comment" class="btn btn-primary btn-sm">
+                                    </div>
+                              </form>
+      </div>
+    </div>
+    <div class="row">
+      {% for comment in lessons.comments.all %}
+      <div class="col-md-8 mt-2 mb-2">
+                      <div class="media border p-3">
+                          <img src="{% static 'Images/user_avatar.png' %}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+                          <div class="media-body">
+                                    <h4>{{comment.author}} <small><i>Posted on {{comment.date_added}}</i></small></h4>
+                                    <p>{{comment.body}}</p>
+                            {% for reply in comment.replies.all %}
+                                        <div class="media p-3">
+                                                <img src="{% static 'Images/user_avatar.png' %}" alt="Jane Doe" class="mr-3 mt-3 rounded-circle" style="width:45px;">
+                                        <div class="media-body">
+                                                <h5>{{reply.author}} <small><i>Posted on {{reply.date_added}}</i></small></h5>
+                                                <p>{{reply.reply_body}}</p>
+                                          </div>
+                                        </div>
+                            {% endfor %}
+                            <!-- form to post reply -->
+                            <form method="post">
+                                  <input type="hidden" name="comment.id" value="{{comment.id}}">
+                                  <input type="hidden" name="comment.comm_name" value="{{comment.comm_name}}">
+                                  {% csrf_token %}
+                                  {{form2.as_p}}
+                                  <input type="submit" name="form2" value="Add Reply" class="btn btn-warning btn-sm">
+                            </form>
+                          </div>
+                  </div>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+
+{%endblock%}
+{% block js %}
+  <script>
+    var popover = new bootstrap.Popover(document.querySelector('.content'), {
+      container: 'body'
+    })
+
+  </script>
+{% endblock %}

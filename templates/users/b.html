@@ -1,0 +1,495 @@
+
+<!doctype html>
+<html prefix="og: http://ogp.me/ns#/website#">
+
+<head>
+  <base href="">
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta property="og:title" content="Learning Meets Play" />
+  <meta property="og:url" content="http://playablo.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="http://playablo.com/images/landing.png">
+  <meta property="og:description" content="Reinventing Learning,through gamification" />
+  <title>PlayAblo for Schools | Management Dashboard</title>
+  <link rel="icon" href="images1/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/jquery-ui.css">
+  <link rel="stylesheet" href="../css/feature-carousel.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- <link rel="stylesheet" href="../css/new-style.css"> -->
+  <link rel="stylesheet" href="../css/plugin.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="../css/jQuery-plugin-progressbar.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <link rel="icon" href="images1/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../css/facilitator.css">
+  <link rel="stylesheet" href="./css/loader.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script src="../assets/slider/jquery.featureCarousel.min.js"></script>
+  <script src="../js/jQuery-plugin-progressbar.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var SchoolList = [{"SchoolId":"8","SchoolName":"Playablo Elementary School","BoardId":"6","WebLogoUrl":"https:\/\/s3-ap-southeast-1.amazonaws.com\/playabloschoollogos\/logos\/school.png","City":"Hassan"}];
+      window.SchoolDetails = JSON.parse(jsonEscape(JSON.stringify(SchoolList)));
+
+      function jsonEscape(str) {
+        str = str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t").replace(/\'/g, "\\\\'").replace(/\&/g, "\\\\&");
+        return str;
+
+      }
+    });
+  </script>
+  <style type="text/css">
+  .previous {
+    background-color: transparent !important;
+    color: rgb(108, 108, 108);
+    position: static;
+    left: 0%;
+    bottom: auto;
+    border: none !important;
+    background-image: none!important;
+    min-width: 74px;
+    padding: 0% !important;
+    border-radius: 47% !important;
+}
+td {
+    word-break: break-word;
+}
+    .position {
+      margin: 26px 128px !important;
+    }
+
+    .progress-bar {
+      position: relative;
+      height: 100px;
+      width: 40%;
+      -webkit-box-shadow: none !important;
+    }
+
+    .progress-bar div {
+      position: absolute;
+      height: 100px;
+      width: 100px;
+      border-radius: 50%;
+      color: #4b86db;
+    }
+
+    .progress-bar div span {
+      position: absolute;
+      font-family: Arial;
+      font-size: 25px;
+      line-height: 75px;
+      height: 75px;
+      width: 75px;
+      left: 12.5px;
+      top: 12.5px;
+      text-align: center;
+      border-radius: 50%;
+      background-color: white;
+    }
+
+    .progress-bar .background {
+      background-color: #b3cef6;
+    }
+
+    .progress-bar .rotate {
+      clip: rect(0 50px 100px 0);
+      background-color: #4b86db;
+    }
+
+    .progress-bar .left {
+      clip: rect(0 50px 100px 0);
+      opacity: 1;
+      background-color: #b3cef6;
+    }
+
+    .progress-bar .right {
+      clip: rect(0 50px 100px 0);
+      transform: rotate(180deg);
+      opacity: 0;
+      background-color: #4b86db;
+    }
+
+    @keyframes toggle {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    // background color
+    backgroundColor: '#b3cef6',
+
+    // progress bar color
+    progressColor: '#4b86db',
+
+    // percentage data to present
+    // 75 = 75%
+    percent: 75,
+
+    // animation speed
+    duration: 2000 .navright.navbar-nav>li.dropdown.open {
+      background: none !important;
+    }
+
+    .navright.navbar-nav>li:hover,
+    .navright.navbar-nav>li.active,
+    .navright.navbar-nav>li.dropdown.open {
+      background: none !important;
+    }
+
+    .menu_heading a {
+      color: #337ab7 !important;
+      text-decoration: underline !important;
+      font-size: 19px;
+    }
+
+    .menu_topic a {
+      color: #337ab7 !important;
+      text-decoration: underline !important;
+      font-size: 19px;
+    }
+
+    .logo {
+      width: 102px;
+      margin-top: 0px;
+      margin-left: 9px;
+      height: auto;
+    }
+
+    input[type=search] {
+      -webkit-appearance: textarea;
+    }
+
+    table.dataTable.no-footer {
+      border-bottom: none;
+    }
+
+    table.dataTable thead th,
+    table.dataTable thead td {
+      padding: 10px 18px;
+      border-bottom: none;
+    }
+
+    table.dataTable {
+      border: 1px solid #80808017;
+    }
+
+    table.dataTable thead {
+      background: #ffffffe0;
+    }
+
+    .progress-bar {
+      background-color: #fff !important;
+    }
+
+    .equal,
+    .equal>div[class*='col-'] {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      flex: 1 0 auto;
+      height: 35px;
+    }
+
+    .label_text {
+      height: 65px;
+      color: grey;
+    }
+
+    .grade_style {
+      padding-top: 0px;
+      color: grey;
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+    .teacher_name,
+    .performer_name {
+      padding-top: 0px !important;
+    }
+
+    table.dataTable thead th,
+    table.dataTable thead td {
+      padding-left: 10px !important;
+    }
+
+    table.dataTable thead th:active,
+    table.dataTable thead td:active {
+      padding-left: 10px !important;
+    }
+
+    .modal-content {
+      width: 100%;
+    }
+
+    .modal-header .close {
+      margin-top: -11px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="matchquiz_canvas" width="1000px" height="850px;" style="position: absolute;z-index: 100001;pointer-events:none;"></canvas>
+  <div class="ajaxloading">
+    <div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+  </div>
+  <div class="tab">
+    <img alt="Brand" src="../images/management/logo.png" class="logo">
+    <button class="tablinks dashboard_tab" onclick="openCity(event, 'Dashboard')" id="defaultOpen"><img alt="Brand" src="../images/management/dashboard.png" class="dashboard" style="display: none;"><img alt="Brand" src="../images/management/dashboard_active.png" class="dashboard_active">DASHBOARD</button>
+    <button class="tablinks drilldown_tab" onclick="openCity(event, 'Drilldown')"><img alt="Brand" src="../images/management/report.png" class="drilldown" style="width: 39px"><img alt="Brand" src="../images/management/report_active.png" class="drilldown_active" style="display: none;width: 39px">REPORT</button>
+    <div id="school_logo"></div>
+  </div>
+  <!-- filter starts here -->
+  <div class="sticky">
+    <ul class="nav navbar-nav navbar-right navright" style="margin-right: 135px;margin-top: 49px;">
+      <li class="dropdown open" style="margin-top:-56px;z-index: 10000;">
+        <a style="padding: 10px 5px;" href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><img src="../images/management/logout.png"> <span class="caret" style="color: black"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" id="Logout"><span class="profileIcons logout"></span>Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="dashboard_title">DASHBOARD</h3>
+    <h3 class="main_title" style="display: none;">REPORT</h3>
+    <h3 class="menu_heading" style="display: none;"></h3>
+    <h3 class="menu_topic" style="display: none;"></h3>
+    <div style="border: 2px solid #80808024;height: 8em;width: 89%;padding: 1% 1%;">
+      <div class="col-md-2 branch">
+        <div class="form-group">
+          <label for="sel1">City</label>
+          <select class="form-control" id="branch">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 batch">
+        <div class="form-group">
+          <label for="sel1">School</label>
+          <select class="form-control" id="batch">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 department">
+        <div class="form-group">
+          <label for="sel1">Grade</label>
+          <select class="form-control" id="department">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 section">
+        <div class="form-group">
+          <label for="sel1">Section</label>
+          <select class="form-control" id="section">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 subject">
+        <div class="form-group">
+          <label for="sel1">Subject</label>
+          <select class="form-control select" id="subject">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 dashboard_reset" style="cursor: pointer;">
+        <button id="applyFilters" style="outline-style: none;background-color: #de695bfa;color: white;margin-top: 13%;padding: 6% 30%;border-radius: 16px;border:  none;">APPLY</button>
+        <button id="applyFilterLog" style="outline-style: none;background-color: #de695bfa;color: white;margin-top: 23%;padding: 6% 30%;border-radius: 16px;border:  none;display: none;">APPLY</button>
+      </div>
+      <div class="col-md-12 resetBtnContainer">
+        <p class="reset" style="margin-left: 1%;margin-top: -5px;cursor: pointer;width:16%;">x Reset Filters</p>
+      </div>
+    </div>
+  </div>
+  <!-- filter ends here -->
+  <!-- dashboard starts here -->
+  <div id="Dashboard" class="tabcontent">
+    <div class="dashboard_content">
+      <div class="col-md-12 sub_col">
+        <div class="col-md-4">
+          <p class="bar_text">Total students</p>
+          <p class="tt_score total_stu"></p>
+        </div>
+        <div class="col-md-4">
+          <p class="bar_text">Teacher Name</p>
+          <p class="tt_score teacher_name"></p>
+        </div>
+        <div class="col-md-4">
+          <p class="bar_text">Number of Assignments Allocated</p>
+          <p class="tt_score total_assmnt"></p>
+        </div>
+      </div>
+      <div class="col-md-6 avg_usage_graph">
+        <div class="col-md-12 sub_col">
+          <p class="heading">Average Usage <span style="font-size: 13px">(Weekly in minutes)</span></p>
+          <div class="performanceContent">
+            <div class="clearfix">
+              <div class="clearfix">
+                <div id="avg_usage_graph_nodata"></div>
+                <div id="avg_usage_graph"></div>
+                <div style="text-align:  center;font-size: 12px;font-family: 'Arial Black';display: none;" class="x-axis"> (Week - Mon-Sun)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 sub_col avg_usage_graph1">
+        <p class="heading">Average Performance</p>
+        <div class="performanceContent performance_val">
+          <div class="clearfix">
+            <div class="clearfix">
+              <!-- <h6>Weighted Score</h6> -->
+              <ul class="pSubjectlist pSubjectlist-custm pull-left">
+              </ul>
+              <ul style="width: auto;display: none;" class="seperformancefilter nav nav-tabs switch-tabs text-center mt0 pull-right" role="tablist">
+                <li data-filter="accuracy" role="presentation" class="active" style="min-width:34%;"><a href="#" aria-controls="all1" role="tab" data-toggle="tab">Pronunciation</a></li>
+                <li data-filter="fluency" role="presentation" style="min-width:34%;"><a href="#" aria-controls="p1" role="tab" data-toggle="tab">Fluency</a></li>
+              </ul>
+            </div>
+            <div style="display: none;" id="no_report_msg">No data Found</div>
+            <div id="seperformance_chart"></div>
+            <div id="performance_chart"></div>
+            <div id="graphs_label"></div>
+          </div>
+        </div>
+        <!-- <div id="avg_usage_graph1"></div>
+              <div style="text-align:  center;font-size: 12px;font-family: 'Arial Black';"> (Week - Mon-Sun)</div> -->
+      </div>
+      <div class="col-md-4 sub_col pronunciation" style="display: none;height: 812px;">
+        <p class="heading">Pronunciation</p>
+        <div class="progress-bar position"></div>
+        <p class="pronunciationPercentage" style="display: none"></p>
+        <p class="heading">Fluency</p>
+        <div class="fluencyScore">
+
+        </div>
+      </div>
+      <div class="col-md-8 sub_col pronunciation" style="display: none;">
+        <p class="heading">Scoring</p>
+        <div id="avg_usage_graph3"></div>
+        <div style="text-align:  center;font-size: 12px;font-family: 'Arial Black';" class="x-axis"> (Week - Mon-Sun)</div>
+        <div id="chart_div" style="width: 800px; height: 500px;"></div>
+        <div style="text-align:  center;font-size: 12px;font-family: 'Arial Black';    margin-top: -90px;"> (Week - Mon-Sun)</div>
+      </div>
+    </div>
+  </div>
+  <!-- dashboard ends here -->
+  <!-- drilldown starts here -->
+  <div id="Drilldown" class="tabcontent">
+    <div class="drilldown_content">
+      <div class="col-md-10 tableContainer">
+        <!-- <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Sl No.</th>
+                        <th>Skill Name</th>
+                        <th>Class %</th>
+                        <th>Highest %</th>
+                        <th>Lowest %</th>
+                        <th>Section</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                  </tbody>
+               </table> -->
+      </div>
+      <div class="col-md-2">
+        <div class="col-md-12 sub_col_rep">
+          <p>Teachers</p>
+          <div class="col-md-4">
+            <img src="../images/management/teacher.png">
+          </div>
+          <div class="col-md-8 teachers_name">
+
+          </div>
+          <hr>
+        </div>
+        <div class="col-md-12 sub_col_rep">
+          <p>Best Performers</p>
+          <hr>
+          <div class="performers">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <div id="classModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 643px;box-shadow: 4px 3px 6px 3px #2b2828a3;margin-top: 187px;">
+      <div class="modal-content" style="border-radius: 0px !important;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            x
+          </button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <table id="classModal" class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center;">Child Name</th>
+                <th style="text-align: center;">Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="classModalLowest" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 643px;box-shadow: 4px 3px 6px 3px #2b2828a3;margin-top: 187px;">
+      <div class="modal-content" style="border-radius: 0px !important;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            x
+          </button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <table id="classModal" class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center;">Child Name</th>
+                <th style="text-align: center;">Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- drilldown ends here -->
+  <script type="text/javascript" src="../js/date.js"></script>
+  <script src="../js/jquery-ui.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <!-- <script src="../js/sc_management.js"></script> -->
+  <script src="../js/management_tab.js"></script>
+  <script src="../assets/customscroll/jquery.nicescroll.js"></script>
+  <script src="../js/jquery.parallax.min.js"></script>
+  <script src="../assets/filter/jquery.filterizr.js"></script>
+  <script src="../assets/slider/jquery.featureCarousel.min.js"></script>
+  <script src="../assets/charts/chart.bundle.min.js"></script>
+  <script src="../assets/icheck/icheck.min.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/circular-countdown.min.js"></script>
+  
+ <script type="text/javascript" src="../dist/management/main.579682b7d24056f3c6c9.js"></script></body>
+
+</html>

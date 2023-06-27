@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+
+<section id="login">
+    <div class="login-form">
+        <img alt="" class="avatar" src="/static/Images/user_avatar.png">
+        <h2>Dashboard</h2>
+        <div class="row">
+            {% for i in students %}
+            <div class="col-md-12">
+                <h4>{{ i.username }}</h4>
+                <p>{{ i.email }}</p>    
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

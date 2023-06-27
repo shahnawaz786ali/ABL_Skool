@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block title %}Login Form{% endblock %}
+{% block body %}
+
+<section id="login">
+    <div class="login-form">
+        <img alt="" class="avatar " src="/static/Images/user_avatar.png">
+        <h2>Login</h2>
+        <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+            <p>Email</p><input name="email" placeholder="Enter your email" type="text">
+            <p>Password</p><input name="password" placeholder="Enter your password" type="password">
+            {% comment %} <div class="input-group">
+                <div class="g-recaptcha" data-sitekey="6LeLgcEkAAAAAMu2Y7-64FZFdZZ6693CmBljwEEA"></div>
+            </div> {% endcomment %}
+            <input type="submit" value="LogIn">
+            <button class="btn" >
+                <a id="google" class="text-white" href="{% provider_login_url 'google'%}">
+                    Login with Google
+                </a>
+            </button>
+            <h6 class="text-center"><a class="text-white" href="{% url 'users:reset_password' %}">Reset Password?</a></h6>
+            <div class="text-center">
+                <p>Don't have an account yet?</p>
+                <h6><a class="text-white" href="{% url 'users:register' %}">Register Here</a></h6>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
