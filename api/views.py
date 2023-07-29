@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from .serializers import standardserializer,SubjectSerializer,LessonSerializer,UserSerializer
 from curriculum.models import Standard,Subject,Lesson
 from users.models import User
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):

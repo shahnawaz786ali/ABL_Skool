@@ -58,13 +58,6 @@ def subject_added(sender,instance,created,**kwargs):
 @receiver(post_save,sender=models.Subject)
 def lesson_added(sender,instance,created,**kwargs):
     if created:
-        # import inspect
-        # request=None
-        # for fr in inspect.stack():
-        #     if fr[3] == 'get_response':
-        #         request = fr[0].f_locals['request']
-        #         break
-        # log_user = request.user
         users=User.objects.all()
         for user in users: 
             if user.is_student:

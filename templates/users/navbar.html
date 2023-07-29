@@ -6,7 +6,7 @@
 <body>
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark ">
         <div class="container-fluid">
-          <a class="navbar-brand rounded-circle" href="/"><img src="/static/Images/logo.png"
+          <a class="navbar-brand rounded-circle pb-2" href="/"><img src="/static/Images/skool.png"
               alt="ABL Education"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +31,15 @@
                   {% endif %}
                 </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="{% url 'users:contact' %}" style="font-size:20px;">Contact Us</a>
+              <li class="nav-item dropdown mx-4" >
+                <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size:20px;" >
+                  Explore
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                  <li><a class="dropdown-item" href="http://ableducation.com/" target="_blank" style="font-size:20px;">ABL Education</a></li>
+                  <li><a class="dropdown-item" href="https://ablkart.com/" target="_blank" style="font-size:20px;">ABL Kart</a></li>
+                  <li><a class="dropdown-item" href="https://kreativityleague.com/" target="_blank" style="font-size:20px;">Kreativity League</a></li>
+                </ul>
               </li>
               {% if user.is_superuser %}
               <li class="nav-item ">
@@ -47,7 +54,9 @@
                   Welcome, {{user.username}}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                  {% if user.is_student %}
                   <li><a class="dropdown-item" href="{% url 'users:student_home' %}" style="font-size:20px;">Profile</a></li>
+                  {% endif %}
                   <li><a class="dropdown-item" href="/logout" style="font-size:20px;">Logout</a></li>
                 </ul>
               </li>
