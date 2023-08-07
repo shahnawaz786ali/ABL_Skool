@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from users.utils import activate
 from .editor_views import *
 from . import StudentViews
+from . import parentView
 
 urlpatterns = [
     path('', views.index, name="index"),
@@ -46,4 +47,8 @@ urlpatterns = [
     path('getsubject/', StudentViews.getsubject, name="getsubject"),
     path('notification/', StudentViews.notifications, name="notification"),
     path('notification_read/<int:id>/', StudentViews.mark_notification_as_read, name="notification_read"),
+
+    # URLS for School
+    path('school_home/', parentView.school_home, name="school_home"),
+    path('attendance_data/', parentView.student_view_data_post, name="attendance_data"),
 ]
