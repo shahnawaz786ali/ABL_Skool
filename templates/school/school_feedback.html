@@ -1,4 +1,4 @@
-{% extends 'student_template/base_template.html' %}
+{% extends 'school/base_template.html' %}
 
 {% block page_title %}
     Feedback Message
@@ -42,7 +42,7 @@
                                 </div>
                                 </div>
                                 {% endif %}      
-                    <form method="POST" action="{% url 'users:student_feedback_save' %}">
+                    <form method="POST" action="{% url 'users:school_feedback_save' %}">
                         {% csrf_token %}
                         <div class="card-body">
                             <div class="form-group">

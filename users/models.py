@@ -163,3 +163,26 @@ class UserLoginActivity(models.Model):
 
     def __str__(self):
         return self.login_username
+    
+class FeedBackSchool(models.Model):
+    id = models.AutoField(primary_key=True)
+    school= models.ForeignKey(user_profile_school, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_reply = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.school.school_name
+    
+class NotificationSchool(models.Model):
+    id = models.AutoField(primary_key=True)
+    school_id = models.ForeignKey(user_profile_school, on_delete=models.CASCADE)
+    message = models.TextField()
+    link = models.URLField(blank=True, null=True)
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.school_id.school_name

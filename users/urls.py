@@ -54,4 +54,8 @@ urlpatterns = [
     path('attendance_data_post/', SchoolView.student_view_data_post, name="attendance_data_post"),
     path('teachers_list/', SchoolView.display_teachers, name="teachers_list"),
     path('subject_list/', SchoolView.subject_list, name="subject_list"),
+    path('school_feedback/', SchoolView.school_feedback, name="school_feedback"),
+    path('school_feedback_save/', SchoolView.school_feedback_save, name="school_feedback_save"),
+    path('school_notification/', SchoolView.notifications, name="school_notification"),
+    path('school_notification_read/<int:id>/', SchoolView.mark_notification_as_read, name="school_notification_read"),
 ]

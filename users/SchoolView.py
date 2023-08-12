@@ -13,65 +13,87 @@ from .signals import succesful_logout
 from reportlab.pdfgen import canvas
 
 def school_home(request,subject_id=None):
-    global absent_count
-    global count_present 
-
     user=request.user
-    student=User.objects.get(username=user)
-    student_obj = user_profile_student.objects.get(user=student)
+    school=User.objects.get(username=user)
+    school_obj = user_profile_school.objects.get(user=school)
     
-    school=student_obj.school
+    school=school_obj.school_name
     students=user_profile_student.objects.filter(school__icontains=school).count()
-    # print(students)
     teachers=user_profile_teacher.objects.filter(school=school).count()
 
     subjects=Subject.objects.all().count()
-    
-    ct=cache.get('count', version=user.username)
-    total_attendance = AttendanceReport.objects.filter(user=student_obj).count()
-    attendance_present = AttendanceReport.objects.filter(user=student_obj, status=True).count()
-    attendance_absent = AttendanceReport.objects.filter(user=student_obj, status=False).count()
 
-    student_grade = Standard.objects.get(id=student_obj.grade)
-    total_subjects = Subject.objects.filter(standard_id=student_grade).count()
-
-    subject_name = []
-    data_present = []
-    data_absent = []
-    subject_data = Subject.objects.filter(standard_id=student_grade)
-    for subject in subject_data:
-        attendance = Attendance.objects.filter(id=subject.id)
-        attendance_present_count = AttendanceReport.objects.filter(attendance_id__in=attendance, status=True,user=student_obj).count()
-        attendance_absent_count =0
-        subject_name.append(subject.name)
-        data_present.append(attendance_present_count)
-        data_absent.append(attendance_absent_count)
-
-    logs=LogEntry.objects.all()
-
-    for l in logs:
-        actionTime=l.action_time
-
-    count_absent=cache.get('absent', version=user.username)
-    present_count=cache.get('present', version=user.username)
-
-    unread_notifications = NotificationStudent.objects.filter(student_id=student_obj, read=False).count()
+    unread_notifications = NotificationSchool.objects.filter(school_id=school_obj, read=False).count()
 
     context={
         "total_student": students,
-        "attendance_present": present_count,
-        "attendance_absent": count_absent,
-        "total_subjects": total_subjects,
-        "subject_name": subject_name,
-        "data_present": data_present,
-        "data_absent": data_absent,
-        "profile":student_obj,
-        "recent_visit":actionTime,
+        "profile":school_obj,
         "unread_notifications":unread_notifications,
         "teachers":teachers,
         "subjects":subjects
     }
     return render(request, "school/school_home_template.html", context)
+
+# def school_home(request,subject_id=None):
+#     global absent_count
+#     global count_present 
+
+#     user=request.user
+#     student=User.objects.get(username=user)
+#     student_obj = user_profile_student.objects.get(user=student)
+    
+#     school=student_obj.school
+#     students=user_profile_student.objects.filter(school__icontains=school).count()
+#     # print(students)
+#     teachers=user_profile_teacher.objects.filter(school=school).count()
+
+#     subjects=Subject.objects.all().count()
+    
+#     ct=cache.get('count', version=user.username)
+#     total_attendance = AttendanceReport.objects.filter(user=student_obj).count()
+#     attendance_present = AttendanceReport.objects.filter(user=student_obj, status=True).count()
+#     attendance_absent = AttendanceReport.objects.filter(user=student_obj, status=False).count()
+
+#     student_grade = Standard.objects.get(id=student_obj.grade)
+#     total_subjects = Subject.objects.filter(standard_id=student_grade).count()
+
+#     subject_name = []
+#     data_present = []
+#     data_absent = []
+#     subject_data = Subject.objects.filter(standard_id=student_grade)
+#     for subject in subject_data:
+#         attendance = Attendance.objects.filter(id=subject.id)
+#         attendance_present_count = AttendanceReport.objects.filter(attendance_id__in=attendance, status=True,user=student_obj).count()
+#         attendance_absent_count =0
+#         subject_name.append(subject.name)
+#         data_present.append(attendance_present_count)
+#         data_absent.append(attendance_absent_count)
+
+#     logs=LogEntry.objects.all()
+
+#     for l in logs:
+#         actionTime=l.action_time
+
+#     count_absent=cache.get('absent', version=user.username)
+#     present_count=cache.get('present', version=user.username)
+
+#     unread_notifications = NotificationStudent.objects.filter(student_id=student_obj, read=False).count()
+
+#     context={
+#         "total_student": students,
+#         "attendance_present": present_count,
+#         "attendance_absent": count_absent,
+#         "total_subjects": total_subjects,
+#         "subject_name": subject_name,
+#         "data_present": data_present,
+#         "data_absent": data_absent,
+#         "profile":student_obj,
+#         "recent_visit":actionTime,
+#         "unread_notifications":unread_notifications,
+#         "teachers":teachers,
+#         "subjects":subjects
+#     }
+#     return render(request, "school/school_home_template.html", context)
 
 # def student_gradewise(request):
 #     user=request.user
@@ -108,9 +130,9 @@ def student_view_data_post(request):
 def display_teachers(request):
     user=request.user
     school=User.objects.get(username=user)
-    school_obj = user_profile_student.objects.get(user=school)
+    school_obj = user_profile_school.objects.get(user=school)
     
-    school=school_obj.school
+    school=school_obj.school_name
     teachers=user_profile_teacher.objects.filter(school=school)
 
     return render(request, "school/teachers_list.html", {"teachers":teachers})
@@ -119,3 +141,40 @@ def subject_list(request):
     subjects=Subject.objects.all()
 
     return render(request, "school/subjects_list.html", {"subjects":subjects})
+
+def school_feedback(request):
+    school_obj = user_profile_school.objects.get(user=request.user)
+    feedback_data = FeedBackSchool.objects.filter(school=school_obj)
+    context = {
+        "feedback_data": feedback_data
+    }
+    return render(request, 'school/school_feedback.html', context)
+
+def school_feedback_save(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method.")
+        return redirect('users:school_feedback')
+    else:
+        feedback = request.POST.get('feedback_message')
+        school_obj = user_profile_school.objects.get(user=request.user)
+
+        try:
+            add_feedback = FeedBackSchool(school=school_obj, feedback=feedback, feedback_reply="")
+            add_feedback.save()
+            # messages.success(request, "Feedback Sent.")
+            return redirect('users:school_feedback')
+        except:
+            messages.error(request, "Failed to Send Feedback.")
+            return redirect('users:school_feedback')
+        
+def notifications(request):
+    user=request.user
+    school=user_profile_school.objects.get(user=user)
+    notifications = NotificationSchool.objects.filter(school_id=school).order_by('-id')
+    return render(request, 'school/notification.html', {'notifications': notifications})
+
+def mark_notification_as_read(request, id):
+    notification = NotificationSchool.objects.get(id=id)
+    notification.read = True
+    notification.save()
+    return redirect('users:school_feedback')
