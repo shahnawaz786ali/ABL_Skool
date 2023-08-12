@@ -36,11 +36,11 @@
             </li>
 
             <li class="nav-item">
-              {% url 'users:student_view_attendance' as student_view_attendance %}
-              <a href="{{ student_view_attendance }}" class="nav-link {% if request.path == student_view_attendance %} active {% endif %}">
+              {% url 'users:attendance_data' as student_view_data %}
+              <a href="{{ student_view_data }}" class="nav-link {% if request.path == student_view_data %} active {% endif %}">
                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>
-                  View Attendance
+                  View Students
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
                 </p>
               </a>
@@ -63,17 +63,6 @@
                 <i class="nav-icon fas fa-comments"></i>
                 <p>
                   Send Feedback
-                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              {% url 'users:student_certificate' as student_certificate %}
-              <a href="{{ student_certificate }}" class="nav-link {% if request.path == student_certificate %} active {% endif %}">
-                <i class="nav-icon fas fa-comments"></i>
-                <p>
-                  Get Certificate
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
                 </p>
               </a>

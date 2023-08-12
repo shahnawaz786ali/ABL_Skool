@@ -201,4 +201,36 @@ class StudentResult(models.Model):
     subject_id = models.ForeignKey(Subject, on_delete=models.CASCADE)
     marks = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+def save_mechanzo_file(instance, filename):
+    upload_to = 'Images/'
+    ext = filename.split('.')[-1]
+    # get filename
+    if instance.kit_id:
+        filename = 'Mechanzo_File/{}.{}'.format(instance.kit_id, ext)
+    return os.path.join(upload_to, filename)
+
+class Mechanzo(models.Model):
+    kit_id=models.CharField(max_length=50)
+    kit=models.FileField(upload_to=save_mechanzo_file,verbose_name="Mechanzo", blank=True)  
+
+    def __str__(self):
+        return self.kit_id 
+
+class Mechanzo_kit_name(models.Model):
+    kit_id=models.CharField(max_length=50)
+    kit_name=models.CharField(max_length=50)
+    slug = models.SlugField(null=True, blank=True)
+
+    def __str__(self):
+        return self.kit_name
+
+class Mechanzo_model_name(models.Model):
+    model_id=models.CharField(max_length=50)
+    model_name=models.CharField(max_length=50)
+    kit=models.ForeignKey(Mechanzo_kit_name, on_delete=models.CASCADE, related_name='mechanzo_models')
+    slug = models.SlugField(null=True, blank=True)
+    file=models.FileField(upload_to=save_mechanzo_file,verbose_name="Mechanzo", blank=True)
+
+    def __str__(self):
+        return self.model_name     

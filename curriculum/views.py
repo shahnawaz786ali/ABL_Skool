@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponseRedirect,redirect
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView,FormView,TemplateView
-from .models import Standard,Subject,Lesson,AISubject,AILesson,CodingSubject,CodingLesson,Comment
+from .models import *
 from django.urls import reverse_lazy
 from .forms import CommentForm,ReplyForm, LessonForm
 from rest_framework import viewsets
@@ -192,7 +192,6 @@ def trainer_lesson(request,slug):
     elif subjects.slug=="arduino_uno_8":
         lessons=lessons.filter(Q(lesson_id="arduino_7_1"))
     return render(request, "trainer/trainer_lesson.html", {"subjects":subjects, "lessons":lessons})
-
 
 def trainer_lesson_detail(request,slug):
     subjects=Subject.objects.all()

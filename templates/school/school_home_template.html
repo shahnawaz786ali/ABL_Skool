@@ -18,7 +18,7 @@
                     <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{ total_student }}</h3>
-                        <p>Total students</p>
+                        <p>Total Students</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -29,30 +29,28 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-success">
+                    <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>{{ attendance_absent }}</h3>
-
-                        <p>Absent</p>
+                        <h3>{{ teachers }}</h3>
+                        <p>Total Teachers</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{% url 'users:student_view_attendance' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{% url 'users:teachers_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-warning">
+                    <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{ attendance_present }}</h3>
-                        <p>Present</p>
+                        <h3>{{ subjects }}</h3>
+                        <p>Subjects</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{% url 'users:student_view_attendance' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{% url 'users:subject_list' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

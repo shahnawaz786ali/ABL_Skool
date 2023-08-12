@@ -111,7 +111,7 @@ class SchoolSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         to=user.email
-        activateEmail(self.request, user, to) 
+        # activateEmail(self.request, user, to) 
         return redirect('users:index')
     
 def mark_attendance(request):
