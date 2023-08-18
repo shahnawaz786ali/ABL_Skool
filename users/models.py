@@ -33,6 +33,7 @@ class user_profile_student(models.Model):
     state=models.CharField(max_length=50)
     city=models.CharField(max_length=50)
     profile_pic=models.ImageField(upload_to=save_profile_image, blank=True, verbose_name='Profile Image')
+    marks_obtained=models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username

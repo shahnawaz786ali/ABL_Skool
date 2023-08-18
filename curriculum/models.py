@@ -233,4 +233,9 @@ class Mechanzo_model_name(models.Model):
     file=models.FileField(upload_to=save_mechanzo_file,verbose_name="Mechanzo", blank=True)
 
     def __str__(self):
-        return self.model_name     
+        return self.model_name
+
+class Topicwise_Marks(models.Model):
+    student=models.ForeignKey(user_profile_student, on_delete=models.CASCADE)
+    topic_name 	= models.ForeignKey(Lesson, on_delete=models.DO_NOTHING)
+    marks=models.IntegerField(default=0)     

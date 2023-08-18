@@ -34,67 +34,6 @@ def school_home(request,subject_id=None):
     }
     return render(request, "school/school_home_template.html", context)
 
-# def school_home(request,subject_id=None):
-#     global absent_count
-#     global count_present 
-
-#     user=request.user
-#     student=User.objects.get(username=user)
-#     student_obj = user_profile_student.objects.get(user=student)
-    
-#     school=student_obj.school
-#     students=user_profile_student.objects.filter(school__icontains=school).count()
-#     # print(students)
-#     teachers=user_profile_teacher.objects.filter(school=school).count()
-
-#     subjects=Subject.objects.all().count()
-    
-#     ct=cache.get('count', version=user.username)
-#     total_attendance = AttendanceReport.objects.filter(user=student_obj).count()
-#     attendance_present = AttendanceReport.objects.filter(user=student_obj, status=True).count()
-#     attendance_absent = AttendanceReport.objects.filter(user=student_obj, status=False).count()
-
-#     student_grade = Standard.objects.get(id=student_obj.grade)
-#     total_subjects = Subject.objects.filter(standard_id=student_grade).count()
-
-#     subject_name = []
-#     data_present = []
-#     data_absent = []
-#     subject_data = Subject.objects.filter(standard_id=student_grade)
-#     for subject in subject_data:
-#         attendance = Attendance.objects.filter(id=subject.id)
-#         attendance_present_count = AttendanceReport.objects.filter(attendance_id__in=attendance, status=True,user=student_obj).count()
-#         attendance_absent_count =0
-#         subject_name.append(subject.name)
-#         data_present.append(attendance_present_count)
-#         data_absent.append(attendance_absent_count)
-
-#     logs=LogEntry.objects.all()
-
-#     for l in logs:
-#         actionTime=l.action_time
-
-#     count_absent=cache.get('absent', version=user.username)
-#     present_count=cache.get('present', version=user.username)
-
-#     unread_notifications = NotificationStudent.objects.filter(student_id=student_obj, read=False).count()
-
-#     context={
-#         "total_student": students,
-#         "attendance_present": present_count,
-#         "attendance_absent": count_absent,
-#         "total_subjects": total_subjects,
-#         "subject_name": subject_name,
-#         "data_present": data_present,
-#         "data_absent": data_absent,
-#         "profile":student_obj,
-#         "recent_visit":actionTime,
-#         "unread_notifications":unread_notifications,
-#         "teachers":teachers,
-#         "subjects":subjects
-#     }
-#     return render(request, "school/school_home_template.html", context)
-
 # def student_gradewise(request):
 #     user=request.user
 #     student = user_profile_student.objects.get(user=request.user.id) 
@@ -178,3 +117,25 @@ def mark_notification_as_read(request, id):
     notification.read = True
     notification.save()
     return redirect('users:school_feedback')
+
+def leaderboard(request):
+    students=user_profile_student.objects.order_by('-marks_obtained')[:5]
+    return render(request, 'school/leadership.html',{'students':students})
+
+def student_report(request):
+    return render(request, "school/student_report.html")
+
+def student_report_gradewise(request):
+    if request.method != "POST":
+        messages.error(request, "Invalid Method")
+        return redirect('users:student_report')
+    else:
+        # Getting all the Input Data
+        grade= request.POST.get('grade')
+
+        student_obj = user_profile_student.objects.filter(grade__icontains=grade)
+
+        context = {
+            "student_obj": student_obj,
+        }
+        return render(request, 'school/student_report_gradewise.html', context)

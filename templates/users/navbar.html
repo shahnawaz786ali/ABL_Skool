@@ -56,6 +56,8 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                   {% if user.is_student %}
                   <li><a class="dropdown-item" href="{% url 'users:student_home' %}" style="font-size:20px;">Profile</a></li>
+                  {% elif user.is_school %}
+                  <li><a class="dropdown-item" href="{% url 'users:school_home' %}" style="font-size:20px;">Profile</a></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="/logout" style="font-size:20px;">Logout</a></li>
                 </ul>
