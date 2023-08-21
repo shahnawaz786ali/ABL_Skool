@@ -252,9 +252,3 @@ def mark_notification_as_read(request, id):
     notification.read = True
     notification.save()
     return redirect('users:student_feedback')
-
-# def unread_notification(request):
-#     user=request.user
-#     student=user_profile_student.objects.filter(user=user)
-#     unread_notifications = NotificationStudent.objects.filter(student_id=student, read=False).count()
-#     return render(request, 'student_temp/dashboard.html', {'unread_notifications': unread_notifications})

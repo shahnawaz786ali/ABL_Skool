@@ -59,10 +59,12 @@ def student_view_data_post(request):
         # Getting all the Input Data
         grade= request.POST.get('grade')
 
-        student_obj = user_profile_student.objects.filter(grade__icontains=grade)
+        student_obj = user_profile_student.objects.filter(grade__iexact=grade)
+        total_students=student_obj.count()
 
         context = {
             "student_obj": student_obj,
+            "total_students":total_students
         }
         return render(request, 'school/student_data_gradewise.html', context)
     
@@ -133,9 +135,14 @@ def student_report_gradewise(request):
         # Getting all the Input Data
         grade= request.POST.get('grade')
 
-        student_obj = user_profile_student.objects.filter(grade__icontains=grade)
+        student_obj = user_profile_student.objects.filter(grade__iexact=grade)
 
         context = {
             "student_obj": student_obj,
         }
         return render(request, 'school/student_report_gradewise.html', context)
+    
+def student_detail_report(request,user_id):
+    users=user_profile_student.objects.get(user_id=user_id)
+    marks=Topicwise_Marks.objects.filter(student=users)
+    return render(request, "school/details_mark.html",{"users":users,"marks":marks})

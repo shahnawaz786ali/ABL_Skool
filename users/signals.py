@@ -1,6 +1,6 @@
 from django.contrib.auth.signals import user_logged_in,user_logged_out,user_login_failed
 from django.db.models.signals import post_save,pre_save
-from .models import User,user_profile_student,UserLoginActivity,NotificationStudent, FeedBackStudent
+from .models import *
 from django.dispatch import receiver
 import datetime as dt
 from django.core.cache import cache
@@ -125,4 +125,20 @@ def comment_post_save(sender,instance,created, **kwargs):
     link = reverse('users:student_feedback')
     if instance.feedback_reply:
         notification = NotificationStudent(student_id=student, message=message, link=link)
+        notification.save()
+
+@receiver(post_save, sender=FeedBackSchool)
+def school_comment_post_save(sender,instance,created, **kwargs):
+    import inspect
+    request=None
+    for fr in inspect.stack():
+        if fr[3] == 'get_response':
+            request = fr[0].f_locals['request']
+            break
+    log_user = request.user
+    school=user_profile_school.objects.get(user=log_user)
+    message = f'{request.user} has given you response for your feedback "{instance.feedback}".'
+    link = reverse('users:school_feedback')
+    if instance.feedback_reply:
+        notification = NotificationSchool(school_id=school, message=message, link=link)
         notification.save()

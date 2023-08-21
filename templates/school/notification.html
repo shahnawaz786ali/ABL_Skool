@@ -6,7 +6,6 @@ Notification
     {% for notification in notifications %}
     {% if not notification.read %}
         <ul>
-            {% comment %} <h3><a href="{% url 'users:student_feedback'%}">{{ notification.message }}</a></h3> {% endcomment %}
             <li><a href="{% url 'users:school_notification_read' notification.id %}">{{ notification.message }}</a></li>
         </ul>
     {% endif %}

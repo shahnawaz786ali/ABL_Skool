@@ -60,5 +60,6 @@ urlpatterns = [
     path('school_notification_read/<int:id>/', SchoolView.mark_notification_as_read, name="school_notification_read"),
     path("leaderboard/",SchoolView.leaderboard, name="leaderboard"),
     path("student_report", SchoolView.student_report, name="student_report"),
-    path("student_report_gradewise", SchoolView.student_report_gradewise, name="student_report_gradewise")
+    path("student_report_gradewise", SchoolView.student_report_gradewise, name="student_report_gradewise"),
+    path("student_detail_report/<user_id>", SchoolView.student_detail_report, name="student_detail_report")
 ]

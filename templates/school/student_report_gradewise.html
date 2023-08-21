@@ -26,11 +26,12 @@
                                         <th>Report</th>
                                     </tr>
                                     </thead>
-                                    
                                     {% for row in student_obj %}
                                     <tr>
                                         <td>{{ row.first_name}}&nbsp {{row.last_name}}</td>
-                                        <td><button type="submit" class="btn btn-primary" id="fetch_student">Get Report</button></td>
+                                        <td>
+                                        <a href="{% url 'users:student_detail_report' user_id=row.user_id %}"type="button" class="btn btn-primary"> Get Report </a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </table>
