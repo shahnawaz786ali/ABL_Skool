@@ -10,18 +10,6 @@ from django.urls import reverse
 from curriculum import models
 import logging
 
-# @receiver(user_logged_in,sender=User)
-# def successfull_login(sender,request,user,**kwargs):
-#     user=request.user
-#     student=User.objects.get(username=user)
-#     student_obj = user_profile_student.objects.get(user=student)
-#     request.session['last_login']=str(dt.datetime.now())
-#     time_in=request.session.get('last_login')
-#     print(time_in)
-#     ct=cache.get('count', 0, version=student_obj.grade)
-#     newcount=ct+1
-#     cache.set('count',newcount,60*60*24,version=student_obj.grade)
-
 @receiver(user_logged_out,sender=User)
 def succesful_logout(sender,request,user,**kwargs):
     if 'last_logout' in request.session:
