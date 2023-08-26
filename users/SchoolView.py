@@ -10,7 +10,7 @@ from django.core.cache import cache
 from django.contrib.admin.models import LogEntry
 import datetime as dt
 from .signals import succesful_logout
-from reportlab.pdfgen import canvas
+# from reportlab.pdfgen import canvas
 
 def school_home(request,subject_id=None):
     user=request.user
@@ -34,19 +34,6 @@ def school_home(request,subject_id=None):
     }
     return render(request, "school/school_home_template.html", context)
 
-# def student_gradewise(request):
-#     user=request.user
-#     student = user_profile_student.objects.get(user=request.user.id) 
-#     school=student.school
-#     students=user_profile_student.objects.filter(school__icontains=school)
-#     # print(students)
-#     # Getting Logged in Student Data
-#     course = student.grade # Getting Course Enrolled of LoggedIn Student
-#     subjects = Subject.objects.filter(standard=course) # Getting the Subjects of Course Enrolled
-#     context = {
-#         "students": students
-#     }
-#     return render(request, "school/student_view_attendance.html", context)
 
 def student_data_view(request):
     return render(request, 'school/student_view_attendance.html')
