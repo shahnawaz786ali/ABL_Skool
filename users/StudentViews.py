@@ -40,10 +40,11 @@ def student_home(request,subject_id=None):
         data_present.append(attendance_present_count)
         data_absent.append(attendance_absent_count)
 
-    logs=LogEntry.objects.all()
+    # logs=LogEntry.objects.all()
 
-    for l in logs:
-        actionTime=l.action_time
+    # for l in logs:
+    #     actionTime=l.action_time
+    logs=UserLoginActivity.objects.filter(login_username=request.user)
 
     count_absent=cache.get('absent', version=user.username)
     present_count=cache.get('present', version=user.username)
@@ -59,7 +60,7 @@ def student_home(request,subject_id=None):
         "data_present": data_present,
         "data_absent": data_absent,
         "profile":student_obj,
-        "recent_visit":actionTime,
+        # "recent_visit":actionTime,
         "unread_notifications":unread_notifications
     }
     return render(request, "student_template/student_home_template.html", context)
