@@ -8,6 +8,7 @@ class standardserializer(serializers.HyperlinkedModelSerializer):
         model=Standard
         fields="__all__"
 
+
 class SubjectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Subject
@@ -23,3 +24,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=User
         fields="__all__"
+    
+    def validated_data(self):
+        return super().validated_data
