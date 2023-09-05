@@ -11,6 +11,7 @@ from django.contrib.admin.models import LogEntry
 import datetime as dt
 from .signals import succesful_logout
 from reportlab.pdfgen import canvas
+import csv
 
 def student_home(request,subject_id=None):
     global absent_count
@@ -25,7 +26,10 @@ def student_home(request,subject_id=None):
     attendance_present = AttendanceReport.objects.filter(user=student_obj, status=True).count()
     attendance_absent = AttendanceReport.objects.filter(user=student_obj, status=False).count()
 
-    student_grade = Standard.objects.get(id=student_obj.grade)
+    grade=student_obj.grade
+    new_grade=grade[0]
+
+    student_grade = Standard.objects.get(id=new_grade)
     total_subjects = Subject.objects.filter(standard_id=student_grade).count()
 
     subject_name = []
@@ -253,3 +257,16 @@ def mark_notification_as_read(request, id):
     notification.read = True
     notification.save()
     return redirect('users:student_feedback')
+
+def save_responses_from_csv(csv_path):
+    with open(csv_path, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            quiz_response = Topicwise_Marks(
+                # student=row['Full Name'],
+                marks=row['Score'],
+                # Map and add more fields as needed
+            )
+            quiz_response.save()
+
+# save_responses_from_csv("C:\\Users\\admin\\Pictures\\abl-lms\\lms\\static\\turtle_res.csv")

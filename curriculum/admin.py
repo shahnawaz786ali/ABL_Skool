@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter, ChoiceDropdownFilter
+from import_export.admin import ImportExportModelAdmin 
 
 # Register your models here.
 class standardadmin(admin.ModelAdmin):
@@ -36,4 +37,7 @@ admin.site.register(StudentResult)
 admin.site.register(Mechanzo)
 admin.site.register(Mechanzo_kit_name)
 admin.site.register(Mechanzo_model_name)
-admin.site.register(Topicwise_Marks)
+
+@admin.register(Topicwise_Marks)
+class marks(ImportExportModelAdmin):
+    pass

@@ -68,7 +68,7 @@ def log_user_logged_in_success(sender, user, request, **kwargs):
     user=request.user
     ct=cache.get('count', 0, version=user.username)
     newcount=ct+1
-    cache.set('count',newcount,60*60*24,version=user.username)
+    cache.set('count',newcount,60*60*24*365,version=user.username)
 
     request.session['last_login']=str(dt.datetime.now())
 
