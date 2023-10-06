@@ -11,6 +11,8 @@ from django.contrib.admin.models import LogEntry
 import datetime as dt
 from .signals import succesful_logout
 from reportlab.pdfgen import canvas
+from assessment.models import *
+from django.db.models import Q,Max
 
 def school_home(request,subject_id=None):
     user=request.user
