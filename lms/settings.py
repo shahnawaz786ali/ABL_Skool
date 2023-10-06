@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'django_email_verification',
     'django_admin_listfilter_dropdown',
     'django_social_share',
-    'import_export'
+    'import_export',
+    'assessment'
 ]
 
 SITE_ID = 1

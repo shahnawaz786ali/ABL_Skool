@@ -1,17 +1,11 @@
 {% extends 'school/base_template.html' %}
 
-{% block page_title %}
-    School Home
-{% endblock page_title %}
-
 {% block main_content %}
 
 {% load static %}
 
 <section class="content">
         <div class="container-fluid">
-
-            {% comment %} Boxes Section Starts {% endcomment %}
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
@@ -23,7 +17,7 @@
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
                     </div>
-                    <a href="{% url 'users:attendance_data' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{% url 'users:student_report' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -44,7 +38,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>{{ subjects }}</h3>
+                        <h3>10</h3>
                         <p>Subjects</p>
                     </div>
                     <div class="icon">
@@ -61,6 +55,8 @@
                         {% comment %} <h3>{{ total_subjects }}</h3> {% endcomment %}
                         {% if unread_notifications %}  
                             <h3>{{ unread_notifications }}</h3>
+                        {% else %}
+                            <h3>None</h3>
                         {% endif %}
                         <p>Notification</p>
                     </div>

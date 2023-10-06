@@ -56,13 +56,6 @@
         </div>
       </div>
     </div>
-        {% comment %} <div class="col col-md-4">
-          <img src="{{subject.image.url|default_if_none:'#'}}" class="bd-placeholder-img rounded-circle" alt="No image found" height="200px" width="200px">
-
-          <h2>{{subject.name}}</h2>
-          <p>{{subject.description|truncatechars:50}}</p>
-          <p><a class="btn btn-success" href="{% url 'curriculum:lesson_list' slug=subject.slug standard=standards.slug %}">Get Lessons »</a></p>
-        </div> {% endcomment %}
     {% endfor %}
   </div>
 </section>

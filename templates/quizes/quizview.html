@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}    
+    {{quiz.name}}
+{% endblock %}
+
+{% block body %}
+<section id="quizview" class="quiz-container">
+    <div class="container my-2">
+        <div class="row">
+            <div class="col my-2">
+                <div class="my-2 quiz-title">
+                    <b>Assessment on {{quiz.name}}</b>
+                </div>
+                {% comment %} <p>Score to pass:{{quiz.required_score_to_pass}}</p> {% endcomment %}
+            </div>
+            <div class="col text-right my-2" id="timer-box">Countdown</div>    
+        </div>
+        {% comment %} {% if quiz.time > 0 %}
+            <a href="#" class="btn btn-danger" id="go-back-button">Go back</a>
+        {% else %}  {% endcomment %}
+            <a href="{% url 'assessment:main_view' %}" class="btn btn-danger" id="go-back-button">Go back</a>
+        {% comment %} {% endif %} {% endcomment %}
+        <hr>
+        <form id="quiz-form" class="mb-3 mt-3">
+            {% csrf_token %}
+            <div id="quiz-box" class="my-2"></div>
+            <button type="submit" class="btn btn-primary my-2" id="submit_btn">Submit</button>        
+        </form>
+        <div id="score-box"></div>
+        <div id="result-box"></div>
+    </div>
+<section>
+{% endblock %}
+
+{% block js %}
+<script>
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+        window.history.pushState(null, null, window.location.href);
+    });
+
+    // Display a confirmation message when the user tries to refresh or close the page
+    window.onbeforeunload = function () {
+        return 'Are you sure you want to leave this page? Your progress will be lost.';
+    };
+
+    // You can also disable right-click to prevent the context menu
+    window.oncontextmenu = function () {
+        return false;
+    };
+
+    // Add JavaScript to disable the "Go back" button on form submission
+    const goBackButton = document.getElementById('go-back-button');
+    const quizForm = document.getElementById('quiz-form');
+
+    quizForm.addEventListener('submit', function () {
+        // Disable the "Go back" button
+        goBackButton.disabled = true;
+    });
+</script>
+{% endblock %}

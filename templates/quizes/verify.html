@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}
+ Verification
+{% endblock %}
+
+{% block body %}
+    <!-- Add your HTML form here -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+{% endblock %}
+
+{% block js%}
+    <!-- JavaScript for accessing the camera -->
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                // Handle camera access and capture images here
+            })
+            .catch(function (error) {
+                console.error('Error accessing camera: ' + error);
+            });
+    </script>
+{% endblock%}

@@ -12,6 +12,7 @@ import datetime as dt
 from .signals import succesful_logout
 from reportlab.pdfgen import canvas
 import csv
+from assessment.models import *
 
 def student_home(request,subject_id=None):
     global absent_count
@@ -74,7 +75,8 @@ def student_view_attendance(request):
     course = student.grade # Getting Course Enrolled of LoggedIn Student
     subjects = Subject.objects.filter(standard=course) # Getting the Subjects of Course Enrolled
     context = {
-        "subjects": subjects
+        "subjects": subjects,
+        "profile":student
     }
     return render(request, "student_template/student_view_attendance.html", context)
 
@@ -128,7 +130,8 @@ def student_profile(request):
 
     context={
         "user": user,
-        "student": student
+        "student": student,
+        "profile":student
     }
     return render(request, 'student_template/student_profile.html', context)
 
@@ -145,7 +148,7 @@ def student_profile_update(request):
         dob= request.POST.get('dob')
         grade= request.POST.get('grade')
         school= request.POST.get('school')
-        profile_pic=request.POST.get('profile_pic')
+        profile_pic = request.FILES.get('profile_pic')
 
         try:
             customuser = User.objects.get(id=request.user.id)
@@ -160,7 +163,7 @@ def student_profile_update(request):
             student.middle_name=middle_name
             student.grade=grade
             student.school=school
-            student.profile_pic.url=profile_pic
+            student.profile_pic=profile_pic
             student.save()
             messages.success(request, "Profile Updated Successfully")
             return redirect('users:student_profile')
@@ -179,10 +182,8 @@ def student_view_result(request):
 def student_report(request):
     student=user_profile_student.objects.get(user=request.user)
     students=StudentResult.objects.filter(student_id=student)
-    # subjects=Subject.objects.filter(standard=student.grade)
-    # for subject in subjects:
-    #     StudentResult.objects.create(student_id=student, subject_id=subject,marks=random.randint(1,20))
-    return render(request, 'student_template/studentreport.html', {'students': students})
+    results=Result.objects.filter(user=request.user)
+    return render(request, 'student_template/studentreport.html', {'students': students,'results':results,"profile":student})
 
 def generate_certificate(request):
     # Get relevant data (e.g., student name, course name, completion date)
@@ -219,13 +220,14 @@ def getsubject(request):
     subjects=Subject.objects.filter(standard=standard)
     lesson=Lesson.objects.filter(subject__in=subjects)
     
-    return render(request, "student_template/manage_subject_template.html", {"subjects":subjects, "lesson":lesson, "standard":standard})
+    return render(request, "student_template/manage_subject_template.html", {"subjects":subjects, "lesson":lesson, "standard":standard,"profile":student})
 
 def student_feedback(request):
     student_obj = user_profile_student.objects.get(user=request.user)
     feedback_data = FeedBackStudent.objects.filter(student=student_obj)
     context = {
-        "feedback_data": feedback_data
+        "feedback_data": feedback_data,
+        "profile":student_obj
     }
     return render(request, 'student_template/student_feedback.html', context)
 
@@ -250,23 +252,10 @@ def notifications(request):
     user=request.user
     student=user_profile_student.objects.get(user=user)
     notifications = NotificationStudent.objects.filter(student_id=student).order_by('-id')
-    return render(request, 'student_template/notification.html', {'notifications': notifications})
+    return render(request, 'student_template/notification.html', {'notifications': notifications,"profile":student})
 
 def mark_notification_as_read(request, id):
     notification = NotificationStudent.objects.get(id=id)
     notification.read = True
     notification.save()
     return redirect('users:student_feedback')
-
-def save_responses_from_csv(csv_path):
-    with open(csv_path, 'r') as csv_file:
-        csv_reader = csv.DictReader(csv_file)
-        for row in csv_reader:
-            quiz_response = Topicwise_Marks(
-                # student=row['Full Name'],
-                marks=row['Score'],
-                # Map and add more fields as needed
-            )
-            quiz_response.save()
-
-# save_responses_from_csv("C:\\Users\\admin\\Pictures\\abl-lms\\lms\\static\\turtle_res.csv")

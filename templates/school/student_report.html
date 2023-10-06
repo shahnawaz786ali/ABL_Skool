@@ -5,10 +5,6 @@
 {% endblock custom_css %}
 {% load static %}
 
-{% block page_title %}
-    View Report
-{% endblock page_title %}
-
 {% block main_content %}
 <section class="content">
     <div class="container-fluid">
@@ -17,7 +13,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">View Gradewise Report</h3>
+                    <h3 class="card-title">View Report</h3>
                 </div>
                 <!-- /.card-header -->
 
@@ -66,6 +62,7 @@
                                     <option value="11" name="grade11">Grade 11</option>
                                     <option value="12" name="grde12">Grade 12</option>
                             </select>
+                            {% comment %} <input type="text" class="form-control w-25" name="student_name" id="student_name" placeholder="Search for a student"> {% endcomment %}
                         </div>
                     </div>
                     <!-- /.card-body -->

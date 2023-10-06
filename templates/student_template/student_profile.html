@@ -71,11 +71,6 @@
                                 <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}">
                             </div>
 
-                            {% comment %} <div class="form-group">
-                                <label>Dob </label>
-                                <input name="dob" class="form-control" value={{ student.dob }}>
-                            </div> {% endcomment %}
-
                             <div class="form-group">
                                 <label>Class </label>
                                 <input name="grade" class="form-control" value={{ student.grade }}>
@@ -93,8 +88,12 @@
                             
                             <div class="form-group">
                                 <label for="profile_pic">Profile Pic </label>
-                                <input type="file" class="form-control" name="profile_pic" id="profile_pic" accept="image/*">
-                                <img class="rounded-circle" src="{{student.profile_pic.url}}" alt="Italian Trulli" style="height:50px; width:50px;">
+                                <input type="file" class="form-control" name="profile_pic" id="profile_pic" accept="image/*" value={{student.profile_pic.url}}>
+                                {% if student.profile_pic%}
+                                <img class="rounded-circle" src="{{student.profile_pic.url}}" alt="Student" style="height:50px; width:50px;">
+                                {% else %}
+                                <p>No profile pic has been uploaded</p>
+                                {% endif %}
                             </div>
                         </div>
                         <!-- /.card-body -->

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}
+ Home
+{% endblock %}
+
+{% block body %}
+<div class="container my-2" id="main-button">
+    <!-- Modal -->
+    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Start Assessment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-confirm">
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">no</button>
+            <button type="button" class="btn btn-success" id="start-button">yes</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="h3 text-center" id="subject_body">Quiz List</div>
+    <hr>
+    <div class="row d-flex justify-content-evenly">
+    {% for obj in object_list %}
+    <div class="col-md-4 offset-md-1">
+        <div class="card my-2" style="width:15rem;">
+            <div class="card-body text-center">
+              <a href="#" class="btn btn-primary">
+                <button
+                    id="subject_btn" 
+                    class="btn btn-link modal-button text-dark"
+                    data-pk="{{obj.pk}}"
+                    data-quiz="{{obj.name}}"
+                    data-questions="{{obj.no_of_question}}"
+                    data-time="{{obj.time}}"
+                    data-pass="{{obj.required_score_to_pass}}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#quizModal">
+                    {{obj.name}}<br>
+                    Grade - {{obj.grade}}
+                </button>
+               </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

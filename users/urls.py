@@ -54,12 +54,20 @@ urlpatterns = [
     path('attendance_data_post/', SchoolView.student_view_data_post, name="attendance_data_post"),
     path('teachers_list/', SchoolView.display_teachers, name="teachers_list"),
     path('subject_list/', SchoolView.subject_list, name="subject_list"),
+    path('school_profile/', SchoolView.school_profile, name="school_profile"),
+    path('school_profile_update/', SchoolView.school_profile_update, name="school_profile_update"),
     path('school_feedback/', SchoolView.school_feedback, name="school_feedback"),
     path('school_feedback_save/', SchoolView.school_feedback_save, name="school_feedback_save"),
     path('school_notification/', SchoolView.notifications, name="school_notification"),
     path('school_notification_read/<int:id>/', SchoolView.mark_notification_as_read, name="school_notification_read"),
     path("leaderboard/",SchoolView.leaderboard, name="leaderboard"),
     path("student_report", SchoolView.student_report, name="student_report"),
-    path("student_report_gradewise", SchoolView.student_report_gradewise, name="student_report_gradewise"),
+    path("student_report_gradewise/<str:grade>/", SchoolView.student_report_gradewise, name="student_report_gradewise"),
     path("student_detail_report/<user_id>", SchoolView.student_detail_report, name="student_detail_report")
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
