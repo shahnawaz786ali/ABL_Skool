@@ -31,8 +31,11 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                     <div class="inner">
+                        {% if attendance_absent %}
                         <h3>{{ attendance_absent }}</h3>
-
+                        {% else %}
+                        <h3>0</h3>
+                        {% endif %}
                         <p>Absent</p>
                     </div>
                     <div class="icon">
@@ -46,7 +49,11 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ attendance_present }}</h3>
+                        {% if attendance_present %}
+                         <h3>{{ attendance_present }}</h3>
+                        {% else %}
+                         <h3>0</h3>
+                        {% endif %}
                         <p>Present</p>
                     </div>
                     <div class="icon">
@@ -63,6 +70,8 @@
                         {% comment %} <h3>{{ total_subjects }}</h3> {% endcomment %}
                         {% if unread_notifications %}  
                             <h3>{{ unread_notifications }}</h3>
+                        {% else %}  
+                            <h3>0</h3>
                         {% endif %}
                         <p>Notification</p>
                     </div>

@@ -12,19 +12,20 @@
             <tr>
                 {% comment %} <th>Name</th> {% endcomment %}
                 <th>Subject</th>
+                <th>Topic</th>
                 <th>Marks</th>
                 <th>Max Marks</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            {% for student in students %}
+            {% for result in results %}
                 <tr>
-                    {% comment %} <td>{{student.student_id}}</td> {% endcomment %}
-                    <td>{{student.subject_id}}</td>
-                    <td>{{student.marks}}</td>
-                    <td>20</td>
-                    <td>{% if student.marks >= 15 %}
+                    <td>{{result.quiz.name}}</td>
+                    <td>{{result.quiz.topic}}</td>
+                    <td>{{result.score}}</td>
+                    <td>100</td>
+                    <td>{% if result.score >= 80 %}
                         <span class="alert alert-success">Pass</span>
                     {% else %}
                         <span class="alert alert-danger">Fail</span>

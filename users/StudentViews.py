@@ -11,6 +11,8 @@ from django.contrib.admin.models import LogEntry
 import datetime as dt
 from .signals import succesful_logout
 from reportlab.pdfgen import canvas
+import csv
+from assessment.models import *
 
 def student_home(request,subject_id=None):
     global absent_count
@@ -25,7 +27,10 @@ def student_home(request,subject_id=None):
     attendance_present = AttendanceReport.objects.filter(user=student_obj, status=True).count()
     attendance_absent = AttendanceReport.objects.filter(user=student_obj, status=False).count()
 
-    student_grade = Standard.objects.get(id=student_obj.grade)
+    grade=student_obj.grade
+    new_grade=grade[0]
+
+    student_grade = Standard.objects.get(id=new_grade)
     total_subjects = Subject.objects.filter(standard_id=student_grade).count()
 
     subject_name = []
@@ -40,12 +45,10 @@ def student_home(request,subject_id=None):
         data_present.append(attendance_present_count)
         data_absent.append(attendance_absent_count)
 
-    # logs=LogEntry.objects.all()
+    logs=LogEntry.objects.all()
 
-    # for l in logs:
-    #     actionTime=l.action_time
-
-    logs=UserLoginActivity.objects.filter(login_username=request.user)
+    for l in logs:
+        actionTime=l.action_time
 
     count_absent=cache.get('absent', version=user.username)
     present_count=cache.get('present', version=user.username)
@@ -71,7 +74,8 @@ def student_view_attendance(request):
     course = student.grade # Getting Course Enrolled of LoggedIn Student
     subjects = Subject.objects.filter(standard=course) # Getting the Subjects of Course Enrolled
     context = {
-        "subjects": subjects
+        "subjects": subjects,
+        "profile":student
     }
     return render(request, "student_template/student_view_attendance.html", context)
 
@@ -125,7 +129,8 @@ def student_profile(request):
 
     context={
         "user": user,
-        "student": student
+        "student": student,
+        "profile":student
     }
     return render(request, 'student_template/student_profile.html', context)
 
@@ -142,7 +147,7 @@ def student_profile_update(request):
         dob= request.POST.get('dob')
         grade= request.POST.get('grade')
         school= request.POST.get('school')
-        profile_pic=request.POST.get('profile_pic')
+        profile_pic = request.FILES.get('profile_pic')
 
         try:
             customuser = User.objects.get(id=request.user.id)
@@ -157,7 +162,7 @@ def student_profile_update(request):
             student.middle_name=middle_name
             student.grade=grade
             student.school=school
-            student.profile_pic.url=profile_pic
+            student.profile_pic=profile_pic
             student.save()
             messages.success(request, "Profile Updated Successfully")
             return redirect('users:student_profile')
@@ -176,10 +181,8 @@ def student_view_result(request):
 def student_report(request):
     student=user_profile_student.objects.get(user=request.user)
     students=StudentResult.objects.filter(student_id=student)
-    # subjects=Subject.objects.filter(standard=student.grade)
-    # for subject in subjects:
-    #     StudentResult.objects.create(student_id=student, subject_id=subject,marks=random.randint(1,20))
-    return render(request, 'student_template/studentreport.html', {'students': students})
+    results=Result.objects.filter(user=request.user)
+    return render(request, 'student_template/studentreport.html', {'students': students,'results':results,"profile":student})
 
 def generate_certificate(request):
     # Get relevant data (e.g., student name, course name, completion date)
@@ -216,13 +219,14 @@ def getsubject(request):
     subjects=Subject.objects.filter(standard=standard)
     lesson=Lesson.objects.filter(subject__in=subjects)
     
-    return render(request, "student_template/manage_subject_template.html", {"subjects":subjects, "lesson":lesson, "standard":standard})
+    return render(request, "student_template/manage_subject_template.html", {"subjects":subjects, "lesson":lesson, "standard":standard,"profile":student})
 
 def student_feedback(request):
     student_obj = user_profile_student.objects.get(user=request.user)
     feedback_data = FeedBackStudent.objects.filter(student=student_obj)
     context = {
-        "feedback_data": feedback_data
+        "feedback_data": feedback_data,
+        "profile":student_obj
     }
     return render(request, 'student_template/student_feedback.html', context)
 
@@ -247,7 +251,7 @@ def notifications(request):
     user=request.user
     student=user_profile_student.objects.get(user=user)
     notifications = NotificationStudent.objects.filter(student_id=student).order_by('-id')
-    return render(request, 'student_template/notification.html', {'notifications': notifications})
+    return render(request, 'student_template/notification.html', {'notifications': notifications,"profile":student})
 
 def mark_notification_as_read(request, id):
     notification = NotificationStudent.objects.get(id=id)

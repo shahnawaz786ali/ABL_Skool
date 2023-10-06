@@ -82,6 +82,10 @@ class user_profile_school(models.Model):
     city=models.CharField(max_length=50,default="")
     street=models.CharField(max_length=100,default="")
     pin=models.CharField(max_length=50,default="")
+    principal=models.CharField(max_length=100,default="")
+    mentor=models.CharField(max_length=100,default="")
+    district=models.CharField(max_length=100,default="")
+    logo=models.ImageField(upload_to="logo/",default="")
 
     def __str__(self):
         return self.user.username

@@ -14,21 +14,21 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Subject List</h3>
+                            <h3 class="card-title">Subjects</h3>
                         </div>
                         <div class="card-body">
                            <div class="table-responsive">
                                 <table class="table">
                                     <thead class="thead-light">
                                     <tr>
-                                        <th>Nmae</th>
+                                        <th>Name</th>
                                         <th>Class</th>
                                     </tr>
                                     </thead>
-                                    {% for row in subjects %}
+                                    {% for subject, classes in subjects.items %}
                                     <tr>
-                                        <td>{{ row.name }}</td>
-                                        <td>{{ row.standard}}</td>
+                                        <td>{{ subject }}</td>
+                                        <td>{{ classes }}</td>
                                     </tr>
                                     {% endfor %}
                                 </table>

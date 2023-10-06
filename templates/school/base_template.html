@@ -5,7 +5,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>School Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ABL Skool- LMS for students to Learn STEM at their own pace</title>
+  <link rel="shortcut icon" type="image/x-icon" href="/static/Images/log.png">
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -55,6 +57,9 @@
           </a>
         </li>
       </ul>
+      <ul class="navbar-nav " style="margin-left:600px;">
+        <li class="nav-item"><a href="{% url 'users:index' %}"><i class="fa fa-home fa-fw" aria-hidden="true"></i></a></li>
+      </ul>
       <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
@@ -63,10 +68,9 @@
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
             
-            <a href="{% url 'users:student_profile' %}" class="dropdown-item">
+            <a href="{% url 'users:school_profile' %}" class="dropdown-item">
               <i class="fas fa-user-edit mr-2"></i> Update Profile
             </a>
-
             <div class="dropdown-divider"></div>
             <a href="{% url 'users:user_logout' %}" class="dropdown-item">
               <i class="fas fa-power-off mr-2"></i> Logout
@@ -85,7 +89,6 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
-    <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -94,14 +97,14 @@
                 {% block page_title %}
                 {% endblock page_title %}
               </h1>
-            </div><!-- /.col -->
+            </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{% url 'users:index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href=""></a></li>
               </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+            </div>
+          </div>
+        </div>
       </div>
       <!-- /.content-header -->
 

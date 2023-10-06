@@ -1,9 +1,5 @@
 {% extends 'school/base_template.html' %}
 
-{% block page_title %}
-    Feedback Message
-{% endblock page_title %}
-
 {% block main_content %}
 
 {% load static %}
@@ -15,7 +11,7 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Leave a Feedback Message</h3>
+                        <h3 class="card-title">Chatbox</h3>
                     </div>
                     <!-- /.card-header -->
                                 {% comment %} Display Messages {% endcomment %}
@@ -46,13 +42,13 @@
                         {% csrf_token %}
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Feedback Message </label>
+                                {% comment %} <label>Feedback Message </label> {% endcomment %}
                                 <textarea name="feedback_message" class="form-control" rows="6" placeholder="Feedback Message"></textarea>
                             </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Leave a Feedback</button>
+                        <button type="submit" class="btn btn-primary">Submit Message</button>
                         </div>
                     </form>
 

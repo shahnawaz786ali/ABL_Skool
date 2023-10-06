@@ -64,8 +64,12 @@
                 </div>
                 <div class="card-footer">
                     <center>
+                      {% if lessons.ppt %}
                         <a href="{{lessons.ppt.url}} " target="_blank"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Get Files</span> &nbsp; <i
                                     class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button></a>
+                      {% else %}
+                        <p class="card-text" > No prerequisite available</p>
+                      {% endif %}
                     </center>
                 </div>
             </div>
@@ -84,8 +88,12 @@
               </div>
               <div class="card-footer">
                   <center>
+                    {% if lessons.Notes %}
                       <a href="{{lessons.Notes.url}} " target="_blank"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Assess yourself</span> &nbsp; <i
                                   class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button></a>
+                      {% else %}
+                        <p class="card-text" > No assessment available</p>
+                      {% endif %}
                   </center>
               </div>
           </div>

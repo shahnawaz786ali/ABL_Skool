@@ -13,6 +13,8 @@ from django.views.decorators.cache import cache_page
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.cache import cache
 from django.utils.decorators import method_decorator
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 CACHE_TTL = getattr(settings ,'CACHE_TTL' , DEFAULT_TIMEOUT)
 
@@ -22,19 +24,23 @@ class StandardListView(ListView):
     model = Standard
     template_name = 'curriculum/standard_list_view.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get the student's grade
+        user = self.request.user
+        student = get_object_or_404(user_profile_student, user=user)
+        grade = student.grade
+
+        # Add the grade to the context
+        context['grade'] = grade
+        return context
+
 # @method_decorator(cache_page(60 * 60*24), name='dispatch')
 class SubjectListView(DetailView):
     context_object_name = 'standards'
     model = Standard
     template_name = 'curriculum/subject_list_view.html'
-
-    # def get_context_data(self,**kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     num_visits = self.request.session.get('num_visits', 0)
-    #     self.request.session['num_visits'] = num_visits + 1
-    #     context['num_visits']=num_visits
-    #     print(num_visits)
-    #     return context
 
 # @method_decorator(cache_page(60*60*24), name='dispatch')
 class LessonListView(DetailView):

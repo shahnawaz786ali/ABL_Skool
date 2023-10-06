@@ -73,3 +73,12 @@ body {
 	margin-top: 15%;
 }
 
+.name-column {
+	width: 50%; /* Adjust the width as needed */
+	text-align: left;
+}
+
+.result-column {
+	width: 50%; /* Adjust the width as needed */
+	text-align: right;
+}

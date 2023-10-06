@@ -50,8 +50,12 @@
                 <div class="card-footer">
                     <center>
                       {% if user.is_authenticated and user.is_student or user.is_superuser %}
-                        <a href="{% url 'curriculum:subject_list' slug=standard.slug %}"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Let's Get Started</span> &nbsp; <i
+                        {% if standard.slug == grade %}
+                          <a href="{% url 'curriculum:subject_list' slug=standard.slug %}"> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Let's Get Started</span> &nbsp; <i
                                     class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button> </a>
+                        {% else %}
+                          <p>Access Denied</p>
+                        {% endif %}
                       {% elif user.is_teacher or user.is_parent or user.is_school or user.is_principal %}
                       <a href=""> <button type="button" class="btn btncolor" id="btn1"><span class="fw-bolder cardtext1">Track Progress</span> &nbsp; <i
                         class="fas fa-arrow-right cardtext1" style="margin-top:5px ;"> </i> </button> </a>  

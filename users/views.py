@@ -14,6 +14,7 @@ from users.models import *
 from .forms import *
 from .utils import activateEmail
 import datetime as dt
+from curriculum.models import *
 
 def index(request):
     return render(request,"users/index.html")
@@ -193,6 +194,17 @@ def enquiry(request):
         email=request.POST.get('email')
         enquiry=request.POST.get('query')
 
+        capcha_token=request.POST.get("g-recaptcha-response")
+        cap_url="https://www.google.com/recaptcha/api/siteverify"
+        cap_secret="6LeLgcEkAAAAAPQMUQSoVzHMQwwmCQx_UATRgoaE"
+        cap_data={"secret":cap_secret, "response":capcha_token}
+        cap_server_response=requests.post(url=cap_url, data=cap_data)
+        print(cap_server_response.text)
+        cap_json=json.loads(cap_server_response.text)
+        if cap_json['success']==False:
+            # messages.error(request,"Invalid Captcha Try Again")
+            return HttpResponseRedirect("/")
+
         enquiry1=Enquiry(name=name, contact=contact_num, email=email, query=enquiry)
         enquiry1.save()
 
@@ -200,3 +212,35 @@ def enquiry(request):
 
 def message(request):
     return render(request,"users/message.html")
+
+# import gspread
+# from oauth2client.service_account import ServiceAccountCredentials
+
+# # Load the credentials from the JSON file
+# scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+# creds = ServiceAccountCredentials.from_json_keyfile_name('C:\\Users\\admin\\Pictures\\abl-lms\\lms\\static\\Images\\credential.json', scope)
+# client = gspread.authorize(creds)
+
+# spreadsheet = client.open('Turtle (Responses)')
+
+# # Select the specific worksheet
+# worksheet = spreadsheet.worksheet('Turtle_Response')
+
+# # Get all values from the worksheet
+# # data = worksheet.get_all_values()
+# data = worksheet.col_values(1)
+
+# for row in data:
+#     # Parse data from the row, e.g., student name, score, etc.
+#     student_name = row[2]
+#     print(student_name)
+#     score = row[1]
+
+#     user=User.objects.get(username=student_name)
+
+#     student_score=Topicwise_Marks(student=user,marks=score)
+#     student_score.save()
+    # Create or update the database record
+    # student, created = StudentScore.objects.get_or_create(name=student_name)
+    # student.score = score
+    # student.save()

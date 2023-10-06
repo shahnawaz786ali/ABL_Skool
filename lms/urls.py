@@ -44,7 +44,8 @@ urlpatterns = [
     path('mechanzo/', include(('mechanzo.urls','mechanzo'),namespace="mechanzo")),
     path('api/', include('api.urls')),
     path('accounts/', include('allauth.urls')),
-    path('email/', include(email_urls)), 
+    path('email/', include(email_urls)),
+    path('assessment/', include(('assessment.urls', 'assessment'), namespace='assessment'))
 ]
 
 from django.conf import settings

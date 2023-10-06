@@ -8,6 +8,10 @@ class studentsignupform(UserCreationForm):
              ('New Era Public School','New Era Public School'),
              ('TDI Internation','TDI International'),
              ('Moga Devi School','Moga Devi School')]
+    
+    choices_grade=[('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),
+             ('6','6'),('7','7'),('8','8'),('9','9'),('10','10'),
+             ('11','11'),('12','12')]
     username=forms.CharField(min_length=5, max_length=150,required=True,label="Username")
     email=forms.EmailField(required=True,label="Email")
     password1=forms.CharField(widget=forms.PasswordInput,label="Password")
@@ -16,8 +20,8 @@ class studentsignupform(UserCreationForm):
     Middle_Name=forms.CharField(required=False,label="Middle Name")
     Last_Name=forms.CharField(required=True,label="Last Name")
     dob=forms.DateField(widget =forms.NumberInput(attrs={'type':'date'}),label="DOB")
-    grade=forms.CharField(required=True,label="Grade")
-    school=forms.CharField(required=True,label="School",widget=forms.Select(choices=choices))
+    grade=forms.CharField(required=True,label="Grade",widget=forms.Select(attrs={'class': 'form-control'},choices=choices_grade))
+    school=forms.CharField(required=True,label="School",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
     country=forms.CharField(required=False,label="Country")
     state=forms.CharField(required=False,label="State")
     city=forms.CharField(required=False,label="City")
@@ -71,7 +75,7 @@ class studentsignupform(UserCreationForm):
         student.country=self.cleaned_data.get('country')
         student.state=self.cleaned_data.get('state')
         student.city=self.cleaned_data.get('city')
-        # student.profile_pic=self.cleaned_data.get('profile_pic')
+        student.profile_pic=self.cleaned_data.get('profile_pic')
         student.save()
         return user
 
@@ -321,6 +325,11 @@ class schoolsignupform(UserCreationForm):
         school.country=self.cleaned_data.get('country')
         school.state=self.cleaned_data.get('state')
         school.city=self.cleaned_data.get('city')
+        school.pin=self.cleaned_data.get('pin')
+        school.district=self.cleaned_data.get('district')
+        school.principal=self.cleaned_data.get('principal')
+        school.mentor=self.cleaned_data.get('mentor')
+        school.logo=self.cleaned_data.get('logo')
         school.save()
         return user
 

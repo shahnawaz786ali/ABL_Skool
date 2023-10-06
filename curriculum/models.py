@@ -238,4 +238,4 @@ class Mechanzo_model_name(models.Model):
 class Topicwise_Marks(models.Model):
     student=models.ForeignKey(user_profile_student, on_delete=models.CASCADE)
     topic_name 	= models.ForeignKey(Lesson, on_delete=models.DO_NOTHING)
-    marks=models.IntegerField(default=0)     
+    marks=models.CharField(max_length=500,default=0)     
