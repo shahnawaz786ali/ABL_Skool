@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container">
+        <form method="post" action="{% url 'users:success_page' %}" class="form-container">
+            {% csrf_token %}
+            <label for="{{ form.parent_name.id_for_label }}">Parent's Name</label>
+            {{ form.parent_name }}
+            <label for="{{ form.parent_mobile.id_for_label }}">Parent's Mobile Number</label>
+            {{ form.parent_mobile }}
+            <label for="{{ form.parent_email.id_for_label }}">Parent's Email</label>
+            {{ form.parent_email }}
+            <label for="{{ form.student_name.id_for_label }}">Student's Name</label>
+            {{ form.student_name }}
+            <label for="{{ form.course.id_for_label }}">Course</label>
+            {{ form.course }}
+            <label for="{{ form.slot_date.id_for_label }}">Preferred Date</label>
+            {{ form.slot_date }}
+            <label for="{{ form.slot_time.id_for_label }}">Preferred Time</label>
+            {{ form.slot_time }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>        
+    </div>
+{% endblock %}

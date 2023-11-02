@@ -1,5 +1,7 @@
 <!doctype html>
 {% load static %}
+{% load flatpickr %}
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -21,6 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <link rel="stylesheet" href="{% static 'css/student_report.css' %}">
     <link rel="stylesheet" href="{% static 'css/reset_password.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/lesson_detail.css' %}">
     <link rel="stylesheet" href="{% static 'css/lesson_list.css' %}">
@@ -48,6 +51,7 @@
       {% block image_block %}
       {% endblock %}
       {% block body %}
+      
       {% endblock %}
       <script
        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"></script>
@@ -65,5 +69,6 @@
       const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     </script>
     {% endblock %}
+    {% comment %} {% include 'users/footer.html' %} {% endcomment %}
   </body>
 </html>

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'captcha',
     'rest_framework',
     'api',
+    'flatpickr',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -55,7 +56,7 @@ INSTALLED_APPS = [
     'django_admin_listfilter_dropdown',
     'django_social_share',
     'import_export',
-    'assessment'
+    'assessment',
 ]
 
 SITE_ID = 1
@@ -73,6 +74,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'lms.urls'
+LOGIN_URL='/login/'
 
 
 CACHES = {

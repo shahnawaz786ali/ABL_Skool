@@ -191,3 +191,12 @@ class NotificationSchool(models.Model):
 
     def __str__(self):
         return self.school_id.school_name
+
+class DemoBooking(models.Model):
+    parent_name = models.CharField(max_length=100)
+    parent_mobile = models.CharField(max_length=15)
+    parent_email = models.EmailField()
+    student_name = models.CharField(max_length=100)
+    course = models.CharField(max_length=100)
+    slot_date = models.DateField()
+    slot_time = models.TimeField()

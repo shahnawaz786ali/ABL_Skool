@@ -213,6 +213,33 @@ def enquiry(request):
 def message(request):
     return render(request,"users/message.html")
 
+from .forms import DemoBookingForm
+from .models import DemoBooking
+
+def book_demo(request):
+    if request.method == 'POST':
+        form = DemoBookingForm(request.POST)
+        if form.is_valid():
+            # Create and save a DemoBooking object with the submitted data
+            demo_booking = DemoBooking(
+                parent_name=form.cleaned_data['parent_name'],
+                parent_mobile=form.cleaned_data['parent_mobile'],
+                parent_email=form.cleaned_data['parent_email'],
+                student_name=form.cleaned_data['student_name'],
+                course=form.cleaned_data['course'],
+                slot_date=form.cleaned_data['slot_date']
+            )
+            demo_booking.save()
+            return redirect('users:success_page')
+
+    else:
+        form = DemoBookingForm()
+
+    return render(request, 'users/demo.html', {'form': form})
+
+def success_page(request):
+    return render(request,'users/demo_success.html')
+
 # import gspread
 # from oauth2client.service_account import ServiceAccountCredentials
 

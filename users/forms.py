@@ -333,3 +333,11 @@ class schoolsignupform(UserCreationForm):
         school.save()
         return user
 
+class DemoBookingForm(forms.Form):
+    parent_name = forms.CharField(max_length=100, label="Parent's Name")
+    parent_mobile = forms.CharField(max_length=15, label="Parent's Mobile Number")
+    parent_email = forms.EmailField(label="Parent's Email")
+    student_name = forms.CharField(max_length=100, label="Student's Name")
+    course = forms.CharField(max_length=100, label="Course")
+    slot_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Preferred Date")
+    slot_time = forms.ChoiceField(choices=[('morning', 'Morning'), ('evening', 'Evening')])

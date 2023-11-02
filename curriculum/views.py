@@ -15,11 +15,12 @@ from django.core.cache import cache
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 CACHE_TTL = getattr(settings ,'CACHE_TTL' , DEFAULT_TIMEOUT)
 
 # Create your views here.
-class StandardListView(ListView):
+class StandardListView(LoginRequiredMixin,ListView):
     context_object_name = 'standards'
     model = Standard
     template_name = 'curriculum/standard_list_view.html'
