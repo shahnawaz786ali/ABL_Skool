@@ -16,6 +16,7 @@ from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required
 
 CACHE_TTL = getattr(settings ,'CACHE_TTL' , DEFAULT_TIMEOUT)
 
@@ -147,7 +148,7 @@ class LessonDeleteView(DeleteView):
         standard = self.object.Standard
         subject = self.object.subject
         return reverse_lazy('curriculum:lesson_list',kwargs={'standard':standard.slug,'slug':subject.slug})
-    
+      
 def ai(request):
     subjects=AISubject.objects.all()
     return render(request, "ai/ai.html",{"subjects":subjects})
@@ -204,3 +205,30 @@ def trainer_lesson_detail(request,slug):
     subjects=Subject.objects.all()
     lessons=Lesson.objects.get(slug=slug)
     return render(request,"trainer/trainer_lesson_detail.html",{"subject":subjects,"lessons":lessons})
+
+def suggested_kit(request):
+    return render(request, "curriculum/suggested_kit.html")
+
+from rest_framework import generics
+from rest_framework import permissions
+from .models import LectureRating
+from .serializers import LectureRatingSerializer
+from django.views.decorators.csrf import csrf_exempt
+
+class LectureRatingCreateView(generics.CreateAPIView):
+    queryset = LectureRating.objects.all()
+    serializer_class = LectureRatingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        lecture_id = self.request.data.get('lecture')
+        user = self.request.user
+        # Check if the user has already rated the lecture
+        existing_rating = LectureRating.objects.filter(lecture=lecture_id, user=user).first()
+        if existing_rating:
+            # Update the existing rating
+            existing_rating.rating = self.request.data.get('rating')
+            existing_rating.save()
+        else:
+            # Create a new rating
+            serializer.save(user=user)

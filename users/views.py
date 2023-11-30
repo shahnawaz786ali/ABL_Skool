@@ -17,25 +17,12 @@ import datetime as dt
 from curriculum.models import *
 
 def index(request):
-    return render(request,"users/index.html")
-    # if request.user.is_authenticated:
-    #     context={'time':my_view(request)}
-    #     return render(request,"users/index.html",context)
-    # else:
-    #     return render(request,"users/index.html")
-
-# def my_view(request):
-#     logout_time=request.session.get('last_logout')
-#     login_time=request.session.get('last_login')
-#     time_out=dt.datetime.strptime(logout_time, '%Y-%m-%d %H:%M:%S.%f')
-#     time_in=dt.datetime.strptime(login_time, '%Y-%m-%d %H:%M:%S.%f')
-
-#     time_out_minute=time_out.minute
-#     print(time_out_minute)
-#     time_in_minute=time_in.minute
-#     print(time_in_minute)
-#     absent=time_out_minute-time_in_minute
-#     print(absent)
+    schools = School.objects.all()
+    grouped_schools = [schools[i:i+4] for i in range(0, len(schools), 4)]
+    context = {
+        'grouped_schools': grouped_schools,
+    }
+    return render(request,"users/index.html", context)
     
 def account_activation(request):
     return render(request, "users/account_activation.html")
@@ -220,7 +207,6 @@ def book_demo(request):
     if request.method == 'POST':
         form = DemoBookingForm(request.POST)
         if form.is_valid():
-            # Create and save a DemoBooking object with the submitted data
             demo_booking = DemoBooking(
                 parent_name=form.cleaned_data['parent_name'],
                 parent_mobile=form.cleaned_data['parent_mobile'],
@@ -231,7 +217,6 @@ def book_demo(request):
             )
             demo_booking.save()
             return redirect('users:success_page')
-
     else:
         form = DemoBookingForm()
 
@@ -240,34 +225,35 @@ def book_demo(request):
 def success_page(request):
     return render(request,'users/demo_success.html')
 
-# import gspread
-# from oauth2client.service_account import ServiceAccountCredentials
+def create_student_project(request):
+    if request.method == 'POST':
+        form = StudentProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('users:success_page')
+    else:
+        form = StudentProjectForm()
+    return render(request, 'users/student_project_form.html', {'form': form})
 
-# # Load the credentials from the JSON file
-# scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-# creds = ServiceAccountCredentials.from_json_keyfile_name('C:\\Users\\admin\\Pictures\\abl-lms\\lms\\static\\Images\\credential.json', scope)
-# client = gspread.authorize(creds)
+import stripe
+from django.conf import settings
+from django.http import JsonResponse
 
-# spreadsheet = client.open('Turtle (Responses)')
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
-# # Select the specific worksheet
-# worksheet = spreadsheet.worksheet('Turtle_Response')
+def payment(request):
+    return render(request, 'users/payment.html')
 
-# # Get all values from the worksheet
-# # data = worksheet.get_all_values()
-# data = worksheet.col_values(1)
+def payment_view(request):
+    if request.method == 'POST':
+        # Handle payment logic here
+        # Example: Process payment and return appropriate response
+        success = True  # Example: Assume payment was successful
 
-# for row in data:
-#     # Parse data from the row, e.g., student name, score, etc.
-#     student_name = row[2]
-#     print(student_name)
-#     score = row[1]
+        if success:
+            return JsonResponse({'message': 'Payment successful'})
+        else:
+            return JsonResponse({'message': 'Payment failed'}, status=400)  # Use appropriate status code for failure
 
-#     user=User.objects.get(username=student_name)
-
-#     student_score=Topicwise_Marks(student=user,marks=score)
-#     student_score.save()
-    # Create or update the database record
-    # student, created = StudentScore.objects.get_or_create(name=student_name)
-    # student.score = score
-    # student.save()
+    # Handle other HTTP methods or invalid requests
+    return JsonResponse({'message': 'Invalid request'}, status=405)  # Method Not Allowed

@@ -37,7 +37,7 @@ admin.site.register(StudentResult)
 admin.site.register(Mechanzo)
 admin.site.register(Mechanzo_kit_name)
 admin.site.register(Mechanzo_model_name)
-
+admin.site.register(LectureRating)
 @admin.register(Topicwise_Marks)
 class marks(ImportExportModelAdmin):
     pass

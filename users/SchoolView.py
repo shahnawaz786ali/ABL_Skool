@@ -12,13 +12,7 @@ import datetime as dt
 from .signals import succesful_logout
 from reportlab.pdfgen import canvas
 from assessment.models import *
-from django.db.models import Max
-from django.db.models import F
-from django.db.models import Value, CharField
-from django.db.models.functions import Concat
-from django.db.models import Q
-from django.db.models import F, Count
-from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q,Max
 
 def school_home(request,subject_id=None):
     user=request.user
@@ -42,19 +36,6 @@ def school_home(request,subject_id=None):
     }
     return render(request, "school/school_home_template.html", context)
 
-# def student_gradewise(request):
-#     user=request.user
-#     student = user_profile_student.objects.get(user=request.user.id) 
-#     school=student.school
-#     students=user_profile_student.objects.filter(school__icontains=school)
-#     # print(students)
-#     # Getting Logged in Student Data
-#     course = student.grade # Getting Course Enrolled of LoggedIn Student
-#     subjects = Subject.objects.filter(standard=course) # Getting the Subjects of Course Enrolled
-#     context = {
-#         "students": students
-#     }
-#     return render(request, "school/student_view_attendance.html", context)
 
 def student_data_view(request):
     return render(request, 'school/student_view_attendance.html')

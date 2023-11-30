@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from users.models import user_profile_student,user_profile_parent,user_profile_principal,user_profile_school,user_profile_teacher,User
+from users.models import *
 from django.core.exceptions import ValidationError
 
 class studentsignupform(UserCreationForm):
@@ -21,7 +21,14 @@ class studentsignupform(UserCreationForm):
     Last_Name=forms.CharField(required=True,label="Last Name")
     dob=forms.DateField(widget =forms.NumberInput(attrs={'type':'date'}),label="DOB")
     grade=forms.CharField(required=True,label="Grade",widget=forms.Select(attrs={'class': 'form-control'},choices=choices_grade))
-    school=forms.CharField(required=True,label="School",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
+    # school=forms.CharField(required=True,label="School",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
+    school = forms.TypedChoiceField(
+        choices=sorted(choices, key=lambda x: x[1]),
+        coerce=str,
+        required=True,
+        label="School",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
     country=forms.CharField(required=False,label="Country")
     state=forms.CharField(required=False,label="State")
     city=forms.CharField(required=False,label="City")
@@ -341,3 +348,16 @@ class DemoBookingForm(forms.Form):
     course = forms.CharField(max_length=100, label="Course")
     slot_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Preferred Date")
     slot_time = forms.ChoiceField(choices=[('morning', 'Morning'), ('evening', 'Evening')])
+
+class StudentProjectForm(forms.ModelForm):
+    class Meta:
+        model = StudentInnovativeProject
+        fields = ['title', 'description', 'student_name', 'project_date', 'document', 'video_link']
+
+        widgets = {
+            'project_date': forms.DateInput(attrs={'class': 'datepicker'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(StudentProjectForm, self).__init__(*args, **kwargs)
+        self.label_suffix = ""

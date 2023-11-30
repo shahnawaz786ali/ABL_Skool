@@ -1,4 +1,4 @@
-from curriculum.models import Lesson,Standard,Subject
+from curriculum.models import Lesson,Standard,Subject,LectureRating
 from rest_framework import serializers
 
 class standardserializer(serializers.HyperlinkedModelSerializer):
@@ -20,3 +20,8 @@ class SubjectSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
+
+class LectureRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LectureRating
+        fields = ('lecture', 'user', 'rating', 'date_rated')

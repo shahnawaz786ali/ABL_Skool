@@ -200,3 +200,15 @@ class DemoBooking(models.Model):
     course = models.CharField(max_length=100)
     slot_date = models.DateField()
     slot_time = models.TimeField()
+
+class StudentInnovativeProject(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    student_name = models.CharField(max_length=100)
+    project_date = models.DateField()
+    document = models.FileField(upload_to='documents/')
+    video_link = models.URLField()
+
+class School(models.Model):
+    name = models.CharField(max_length=100)
+    logo = models.ImageField(upload_to='school_logos/')

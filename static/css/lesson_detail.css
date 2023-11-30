@@ -97,3 +97,23 @@ a{
     -webkit-background-clip: text;
      background-clip: text;
 }
+
+/* Add this to your CSS or style file */
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star::before {
+    content: "\2606"; /* Empty star */
+}
+
+.star.clicked::before {
+    content: "\2605"; /* Filled star */
+}

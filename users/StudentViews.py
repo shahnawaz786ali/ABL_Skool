@@ -45,11 +45,10 @@ def student_home(request,subject_id=None):
         data_present.append(attendance_present_count)
         data_absent.append(attendance_absent_count)
 
-    # logs=LogEntry.objects.all()
+    logs=LogEntry.objects.all()
 
-    # for l in logs:
-    #     actionTime=l.action_time
-    logs=UserLoginActivity.objects.filter(login_username=request.user)
+    for l in logs:
+        actionTime=l.action_time
 
     count_absent=cache.get('absent', version=user.username)
     present_count=cache.get('present', version=user.username)

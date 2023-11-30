@@ -2,6 +2,7 @@ from django.urls import path,include
 from . import views
 from rest_framework.response import Response
 from rest_framework import routers
+from .views import LectureRatingCreateView
 
 app_name='curriculum'
 urlpatterns = [
@@ -9,6 +10,8 @@ urlpatterns = [
     path('trainer_subject_1/',views.trainer_subject_1, name="trainer_subject_1"),
     path('trainer_subject_2/',views.trainer_subject_2, name="trainer_subject_2"),
     path('trainer_subject_3/',views.trainer_subject_3, name="trainer_subject_3"),
+    path('suggested_kit/',views.suggested_kit, name="suggested_kit"),
+    path('rate-lecture/', LectureRatingCreateView.as_view(), name='rate-lecture'),
     path('trainer_lesson/<slug:slug>',views.trainer_lesson,name="trainer_lesson"),
     path("trainer_lesson_detail/<slug:slug>",views.trainer_lesson_detail, name="trainer_lesson_detail"),
     path('coding/', views.coding, name="coding"),

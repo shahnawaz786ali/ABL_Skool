@@ -238,5 +238,13 @@ class Mechanzo_model_name(models.Model):
 class Topicwise_Marks(models.Model):
     student=models.ForeignKey(user_profile_student, on_delete=models.CASCADE)
     topic_name 	= models.ForeignKey(Lesson, on_delete=models.DO_NOTHING)
-    # new_marks=models.CharField(max_length=500, default=0)
     marks=models.CharField(max_length=500,default=0)     
+
+class LectureRating(models.Model):
+    lecture = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(default=0)
+    date_rated = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('lecture', 'user')

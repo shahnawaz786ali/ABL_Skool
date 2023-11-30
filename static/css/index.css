@@ -52,7 +52,7 @@ header{
   width: 100%;
 }
 
-.carousel-item{
+#carousel .carousel-item{
   height:500px;
 }
 
@@ -274,10 +274,25 @@ border-bottom: 1px solid #999; */
     }
 }
 
+#school-carousel{
+  height:315px;
+  padding:20px;
+}
+
+#school-carousel .carousel-item{
+  height:200px;
+  margin-left:40px;
+}
+
 .footer-dark {
-    padding:20px 0;
+    padding:20px 0 5px 0;
     color:#f0f9ff;
-    background-color:#282d32;
+    /* background-color:#282d32; */
+    background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/static/Images/background/bg1.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 
 .footer-dark #toggler{
@@ -303,6 +318,7 @@ border-bottom: 1px solid #999; */
     color:inherit;
     text-decoration:none;
     opacity:0.6;
+    padding:2px 16px;
   }
   
 .footer-dark ul a:hover {

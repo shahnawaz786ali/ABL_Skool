@@ -19,9 +19,11 @@
     transform: translate(-50%, -50%);
 }
 
-/* Style for the form container */
-/* Style for the container */
-.container {
+#demo-form{
+    margin-top:30px;
+}
+
+#footer .container {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'captcha',
     'rest_framework',
     'api',
-    'flatpickr',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
@@ -184,3 +183,6 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '342665258405-13v5lk4bq59c9sca53ed6cegqq7e9dud.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+STRIPE_PUBLIC_KEY = 'pk_test_51ODO9KSD5cftCI7fhneQzqT9WpZ2b2OjIVG0qOQlZZU8HSl86JlR5EWk3drbLaOhKrBK0qYFm69V885qYEXZJOoM00J5QEfxt0'
+STRIPE_SECRET_KEY = 'sk_test_51ODO9KSD5cftCI7fCOOh6ncOZg5D7ZhHRV8eA8LYwcRyejlM6M1cSdqYR4MRWEV9NCsPW5vhfn3Q23r3O8ns5YA700Qy6GuYtf'
