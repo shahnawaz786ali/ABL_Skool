@@ -213,6 +213,12 @@ class teachersignupform(UserCreationForm):
 
 
 class principalsignupform(UserCreationForm):  
+
+    choices=[('Vivekanand School','Vivekanand School'),
+             ('New Era Public School','New Era Public School'),
+             ('TDI Internation','TDI International'),
+             ('Moga Devi School','Moga Devi School')]
+    
     username = forms.CharField(min_length=5, max_length=150,label="Username")  
     email = forms.EmailField(label="Email")  
     password1 = forms.CharField(widget=forms.PasswordInput,label="Password")  
@@ -221,7 +227,7 @@ class principalsignupform(UserCreationForm):
     Middle_Name=forms.CharField(required=False,label="Middle Name")
     Last_Name=forms.CharField(required=True,label="Last Name")
     Mobile=forms.CharField(required=True,label="Mobile Number")
-    school=forms.CharField(required=True,label="School")
+    school=forms.CharField(required=True,label="School",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
 
     class Meta(UserCreationForm.Meta):
         model=User
@@ -272,11 +278,17 @@ class principalsignupform(UserCreationForm):
         return user
 
 class schoolsignupform(UserCreationForm):
+
+    choices=[('Vivekanand School','Vivekanand School'),
+             ('New Era Public School','New Era Public School'),
+             ('TDI Internation','TDI International'),
+             ('Moga Devi School','Moga Devi School')]
+    
     username=forms.CharField(min_length=5, max_length=150,required=True,label="Username")
     email=forms.EmailField(required=True,label="Email")
     password1=forms.CharField(widget=forms.PasswordInput(),label="Password")
     password2=forms.CharField(widget=forms.PasswordInput(),label="Confirm Password")
-    School_Name=forms.CharField(required=True,label="School Name")
+    School_Name=forms.CharField(required=True,label="School Name",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
     phone=forms.CharField(required=True,label="Phone Number")
     mobile=forms.CharField(required=True,label="Mobile Number")
     established=forms.DateField(widget =forms.NumberInput(attrs={'type':'date'}),label="Year of Establishment")

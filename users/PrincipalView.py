@@ -15,18 +15,18 @@ from assessment.models import *
 from django.db.models import Q,Max
 from django.core.exceptions import ObjectDoesNotExist
 
-def school_home(request,subject_id=None):
+def principal_home(request,subject_id=None):
     user=request.user
     school=User.objects.get(username=user)
-    school_obj = user_profile_school.objects.get(user=school)
+    school_obj = user_profile_principal.objects.get(user=school)
     
-    school=school_obj.school_name
+    school=school_obj.school
     students=user_profile_student.objects.filter(school__icontains=school).count()
-    teachers=user_profile_teacher.objects.filter(school=school).count()
+    teachers=user_profile_teacher.objects.filter(school__icontains=school).count()
 
     subjects=Subject.objects.all().count()
 
-    unread_notifications = NotificationSchool.objects.filter(school_id=school_obj, read=False).count()
+    unread_notifications = NotificationPrincipal.objects.filter(principal_id=school_obj, read=False).count()
 
     context={
         "total_student": students,
@@ -35,7 +35,7 @@ def school_home(request,subject_id=None):
         "teachers":teachers,
         "subjects":subjects
     }
-    return render(request, "school/school_home_template.html", context)
+    return render(request, "principal_template/school_home_template.html", context)
 
 
 def student_data_view(request):
@@ -61,12 +61,12 @@ def student_view_data_post(request):
 def display_teachers(request):
     user=request.user
     school=User.objects.get(username=user)
-    school_obj = user_profile_school.objects.get(user=school)
+    school_obj = user_profile_principal.objects.get(user=school)
     
-    school=school_obj.school_name
+    school=school_obj.school
     teachers=user_profile_teacher.objects.filter(school=school)
 
-    return render(request, "school/teachers_list.html", {"teachers":teachers})
+    return render(request, "principal_template/teachers_list.html", {"teachers":teachers})
 
 def subject_list(request):
     subjects={"Python": "7, 8, 9, and 10",
@@ -74,16 +74,16 @@ def subject_list(request):
         "Arduino": "10 and 11",
         "Robotics": "12"}
 
-    return render(request, "school/subjects_list.html", {"subjects":subjects})
+    return render(request, "principal_template/subjects_list.html", {"subjects":subjects})
 
 def school_feedback(request):
-    school_obj = user_profile_school.objects.get(user=request.user)
-    feedback_data = FeedBackSchool.objects.filter(school=school_obj)
+    school_obj = user_profile_principal.objects.get(user=request.user)
+    feedback_data = FeedBackPrincipal.objects.filter(principal=school_obj)
     context = {
         "feedback_data": feedback_data,
         "school":school_obj
     }
-    return render(request, 'school/school_feedback.html', context)
+    return render(request, 'principal_template/school_feedback.html', context)
 
 def school_feedback_save(request):
     if request.method != "POST":
@@ -91,22 +91,22 @@ def school_feedback_save(request):
         return redirect('users:school_feedback')
     else:
         feedback = request.POST.get('feedback_message')
-        school_obj = user_profile_school.objects.get(user=request.user)
+        school_obj = user_profile_principal.objects.get(user=request.user)
 
         try:
-            add_feedback = FeedBackSchool(school=school_obj, feedback=feedback, feedback_reply="")
+            add_feedback = FeedBackPrincipal(principal=school_obj, feedback=feedback, feedback_reply="")
             add_feedback.save()
             # messages.success(request, "Feedback Sent.")
-            return redirect('users:school_feedback')
+            return redirect('users:principal_feedback')
         except:
             messages.error(request, "Failed to Send Feedback.")
-            return redirect('users:school_feedback')
+            return redirect('users:principal_feedback')
         
 def notifications(request):
     user=request.user
-    school=user_profile_school.objects.get(user=user)
-    notifications = NotificationSchool.objects.filter(school_id=school).order_by('-id')
-    return render(request, 'school/notification.html', {'notifications': notifications,"school":school})
+    school=user_profile_principal.objects.get(user=user)
+    notifications = NotificationPrincipal.objects.filter(principal_id=school).order_by('-id')
+    return render(request, 'principal_template/notification.html', {'notifications': notifications,"school":school})
 
 def mark_notification_as_read(request, id):
     notification = NotificationSchool.objects.get(id=id)
@@ -116,7 +116,7 @@ def mark_notification_as_read(request, id):
 
 
 def leaderboard(request):
-    school=user_profile_school.objects.get(user=request.user)
+    school=user_profile_principal.objects.get(user=request.user)
     max_results = Result.objects.values('user__user_profile_student__grade').annotate(max_score=Max('score'))
     overall_students=Result.objects.all().order_by('-score')[:5]
 
@@ -136,11 +136,12 @@ def leaderboard(request):
         # Add the top students to the dictionary
         top_students_by_grade[grade] = top_students
 
-    return render(request, 'school/leadership.html', {'top_students_by_grade': top_students_by_grade,"overall_students":overall_students,"school":school})
+    return render(request, 'principal_template/leadership.html', {'top_students_by_grade': top_students_by_grade,"overall_students":overall_students,"school":school})
 
 def student_report(request):
-    school=user_profile_school.objects.get(user=request.user)
-    students = user_profile_student.objects.all()
+    school=user_profile_principal.objects.get(user=request.user)
+    school_name=school.school
+    students = user_profile_student.objects.filter(school=school_name)
     grades = Standard.objects.all()
 
     students_gradewise = []
@@ -161,15 +162,15 @@ def student_report(request):
         "search_query": search_query,
         "school":school
     }
-    if request.is_ajax():
-        students_data = [{'grade': student.grade, 'student_name': student.first_name, 'student_id': student.user_id} for student in students]
-        return JsonResponse({'students': students_data})
+    # if request.is_ajax():
+    #     students_data = [{'grade': student.grade, 'student_name': student.first_name, 'student_id': student.user_id} for student in students]
+    #     return JsonResponse({'students': students_data})
     
-    return render(request, 'school/view_report.html', context)
+    return render(request, 'principal_template/view_report.html', context)
 
 
 def student_report_gradewise(request,grade):
-    school=user_profile_school.objects.get(user=request.user)
+    school=user_profile_principal.objects.get(user=request.user)
     query = request.GET.get('q')
     students = user_profile_student.objects.filter(grade=grade)
 
@@ -185,31 +186,17 @@ def student_report_gradewise(request,grade):
         'search_query': query
     }
     
-    return render(request, 'school/student_report_gradewise.html', context)
+    return render(request, 'principal_template/student_report_gradewise.html', context)
 
-# def student_report_gradewise(request):
-#     if request.method != "POST":
-#         messages.error(request, "Invalid Method")
-#         return redirect('users:student_report')
-#     else:
-#         grade= request.POST.get('grade')
-#         student_name = request.POST.get("student_name")
-
-#         student_obj = user_profile_student.objects.filter(grade__iexact=grade)
-
-#         context = {
-#             "student_obj": student_obj,
-#         }
-#         return render(request, 'school/student_report_gradewise.html', context)
     
 def student_detail_report(request,user_id):
     try:
-        school=user_profile_school.objects.get(user=request.user)
+        school=user_profile_principal.objects.get(user=request.user)
         users=user_profile_student.objects.get(user_id=user_id)
         user=User.objects.get(username=users)
         marks=Result.objects.filter(user=user)
 
-        return render(request, "school/details_mark.html",{"users":users,"marks":marks,"school":school})
+        return render(request, "principal_template/details_mark.html",{"users":users,"marks":marks,"school":school})
     except ObjectDoesNotExist:
         # Handle the case when a matching object doesn't exist
         return HttpResponse("The requested data does not exist.")
@@ -217,31 +204,25 @@ def student_detail_report(request,user_id):
 
 def school_profile(request):
     user = User.objects.get(id=request.user.id)
-    school = user_profile_school.objects.get(user=user)
+    school = user_profile_principal.objects.get(user=user)
 
     context={
         "user": user,
         "school": school
     }
-    return render(request, 'school/school_profile.html', context)
+    return render(request, 'principal_template/school_profile.html', context)
 
 def school_profile_update(request):
     if request.method != "POST":
         messages.error(request, "Invalid Method!")
-        return redirect('users:school_profile')
+        return redirect('users:principal_profile')
     else:
+        first_name=request.POST.get('first_name')
+        last_name=request.POST.get('last_name')
         school_name = request.POST.get('school_name')
-        principal_name = request.POST.get('principal_name')
         password = request.POST.get('password')
         mobile= request.POST.get('mobile')
-        country= request.POST.get('country')
-        state= request.POST.get('state')
-        city= request.POST.get('city')
-        district=request.POST.get('district')
-        street=request.POST.get('street')
-        pincode=request.POST.get('pincode')
-        mentor=request.POST.get('mentor')
-        logo = request.FILES.get('logo')
+        profile_pic = request.FILES.get('logo')
 
         try:
             customuser = User.objects.get(id=request.user.id)
@@ -249,21 +230,15 @@ def school_profile_update(request):
                 customuser.set_password(password)
             customuser.save()
 
-            school = user_profile_school.objects.get(user=customuser.id)
-            school.school_name=school_name
-            school.principal=principal_name
-            school.mentor=mentor
+            school = user_profile_principal.objects.get(user=customuser.id)
+            school.school=school_name
             school.mobile=mobile
-            school.country=country
-            school.state=state
-            school.city=city
-            school.district=district
-            school.pin=pincode
-            school.street=street
-            school.logo=logo
+            school.first_name=first_name
+            school.last_name=last_name
+            school.profile_pic=profile_pic
             school.save()
             messages.success(request, "Profile Updated Successfully")
-            return redirect('users:school_profile')
+            return redirect('users:principal_profile')
         except:
             messages.error(request, "Failed to Update Profile")
-            return redirect('users:school_profile')
+            return redirect('users:principal_profile')

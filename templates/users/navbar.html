@@ -58,9 +58,13 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
                   {% if user.is_student %}
-                  <li><a class="dropdown-item" href="{% url 'users:student_home' %}" style="font-size:20px;">Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'users:student_home' %}" style="font-size:20px;">My Dashboard</a></li>
                   {% elif user.is_school %}
-                  <li><a class="dropdown-item" href="{% url 'users:school_home' %}" style="font-size:20px;">Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'users:school_home' %}" style="font-size:20px;">School Dashboard</a></li>
+                  {% elif user.is_principal %}
+                  <li><a class="dropdown-item" href="{% url 'users:principal_home' %}" style="font-size:20px;">My Dashboard</a></li>
+                  {% elif user.is_teacher %}
+                  <li><a class="dropdown-item" href="{% url 'users:teacher_home' %}" style="font-size:20px;">My Dashboard</a></li>
                   {% endif %}
                   <li><a class="dropdown-item" href="/logout" style="font-size:20px;">Logout</a></li>
                 </ul>

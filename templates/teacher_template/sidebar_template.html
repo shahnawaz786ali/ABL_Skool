@@ -1,0 +1,83 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <!-- {% if school.profile_pic %} -->
+            <img src="/static/Images/teacher.jpg" class="img-circle elevation-2" alt="User Image">
+            <!-- {% else %}
+            <p>No logo is uploaded</p>
+            {% endif %} -->
+          </div>
+          <div class="info">
+            <a href="" class="d-block">{{ school.first_name }}</a>
+          </div>
+        </div>
+        Name
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+            
+            <li class="nav-item">
+              {% url 'users:teacher_home' as teacher_home %}
+              <a href="{{ teacher_home }}" class="nav-link {% if request.path == teacher_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'users:teacher_feedback' as teacher_feedback %}
+              <a href="{{ teacher_feedback }}" class="nav-link {% if request.path == teacher_feedback %} active {% endif %}">
+                <i class="nav-icon fas fa-comments"></i>
+                <p>
+                  Send Feedback
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'users:tleaderboard' as tboard %}
+              <a href="{{ tboard }}" class="nav-link {% if request.path == tboard %} active {% endif %}">
+                <i class="nav-icon fa fa-trophy"></i>
+                <p>
+                  View Leaderboard
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'users:tstudent_report' as treport %}
+              <a href="{{treport }}" class="nav-link {% if request.path == treport %} active {% endif %}">
+                <i class="nav-icon fa fa-file"></i>
+                <p>
+                  View Report
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'curriculum:training_level' as training%}
+              <a href="{{training }}" class="nav-link {% if request.path == training %} active {% endif %}">
+                <i class="nav-icon fa fa-file"></i>
+                <p>
+                  Teacher's Training Module
+                </p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
