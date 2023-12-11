@@ -12,6 +12,9 @@ class studentsignupform(UserCreationForm):
     choices_grade=[('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),
              ('6','6'),('7','7'),('8','8'),('9','9'),('10','10'),
              ('11','11'),('12','12')]
+
+    choices_section=[('A','A'),('B','B'),('C','C'),('D','D'),('E','E'),('F','F'),('G','G'),('H','H'),('I','I'),('J','J'),('K','K'),('L','L'),('M','M'),('N','N')]
+    
     username=forms.CharField(min_length=5, max_length=150,required=True,label="Username")
     email=forms.EmailField(required=True,label="Email")
     password1=forms.CharField(widget=forms.PasswordInput,label="Password")
@@ -21,7 +24,7 @@ class studentsignupform(UserCreationForm):
     Last_Name=forms.CharField(required=True,label="Last Name")
     dob=forms.DateField(widget =forms.NumberInput(attrs={'type':'date'}),label="DOB")
     grade=forms.CharField(required=True,label="Grade",widget=forms.Select(attrs={'class': 'form-control'},choices=choices_grade))
-    # school=forms.CharField(required=True,label="School",widget=forms.Select(attrs={'class': 'form-control'},choices=choices))
+    section=forms.CharField(required=True,label="Section",widget=forms.Select(attrs={'class': 'form-control'},choices=choices_section))
     school = forms.TypedChoiceField(
         choices=sorted(choices, key=lambda x: x[1]),
         coerce=str,

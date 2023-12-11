@@ -85,7 +85,7 @@ class Lesson(models.Model):
     slug = models.SlugField(null=True, blank=True)
     video = models.FileField(upload_to=save_lesson_files,verbose_name="Video", blank=True, null=True)
     ppt = models.FileField(upload_to=save_lesson_files,verbose_name="Presentations", blank=True)
-    # assessment=models.URLField(verbose_name="Assessment", max_length=300,default="")
+    assessment=models.URLField(verbose_name="Assessment", max_length=300,default="")
     Notes = models.FileField(upload_to=save_lesson_files,verbose_name="Notes", blank=True)
 
     class Meta:

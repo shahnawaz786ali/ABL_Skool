@@ -28,6 +28,7 @@ class user_profile_student(models.Model):
     middle_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
     grade=models.CharField(max_length=50)
+    section=models.CharField(max_length=50,default="")
     school=models.CharField(max_length=200,default="")
     country=models.CharField(max_length=100)
     state=models.CharField(max_length=50)
