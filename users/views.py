@@ -53,8 +53,8 @@ class ParentSignUpView(CreateView):
 
     def form_valid(self,form):
         user =form.save()
-        to=user.email
-        activateEmail(self.request, user, to)       
+        # to=user.email
+        # activateEmail(self.request, user, to)       
         return redirect('users:message')
 
 class TeacherSignUpView(CreateView):
@@ -68,8 +68,8 @@ class TeacherSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        to=user.email
-        activateEmail(self.request, user, to) 
+        # to=user.email
+        # activateEmail(self.request, user, to) 
         return redirect('users:index')
 
 class PrincipalSignUpView(CreateView):
@@ -83,8 +83,8 @@ class PrincipalSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        to=user.email
-        activateEmail(self.request, user, to) 
+        # to=user.email
+        # activateEmail(self.request, user, to) 
         return redirect('users:index')
 
 class SchoolSignUpView(CreateView):

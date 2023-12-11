@@ -69,6 +69,7 @@ class user_profile_principal(models.Model):
     last_name=models.CharField(max_length=50)
     mobile=models.CharField(max_length=15)
     school=models.CharField(max_length=200,default="")
+    profile_pic=models.ImageField(upload_to=save_profile_image, blank=True, verbose_name='Profile Image')
 
     def __str__(self):
         return self.user.username
@@ -181,6 +182,17 @@ class FeedBackSchool(models.Model):
     def __str__(self):
         return self.school.school_name
     
+class FeedBackPrincipal(models.Model):
+    id = models.AutoField(primary_key=True)
+    principal= models.ForeignKey(user_profile_principal, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_reply = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.principal.school
+    
 class NotificationSchool(models.Model):
     id = models.AutoField(primary_key=True)
     school_id = models.ForeignKey(user_profile_school, on_delete=models.CASCADE)
@@ -213,3 +225,39 @@ class StudentInnovativeProject(models.Model):
 class School(models.Model):
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='school_logos/')
+    
+
+class NotificationPrincipal(models.Model):
+    id = models.AutoField(primary_key=True)
+    principal_id = models.ForeignKey(user_profile_principal, on_delete=models.CASCADE)
+    message = models.TextField()
+    link = models.URLField(blank=True, null=True)
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.principal_id.school
+    
+class FeedBackTeacher(models.Model):
+    id = models.AutoField(primary_key=True)
+    teacher= models.ForeignKey(user_profile_teacher, on_delete=models.CASCADE)
+    feedback = models.TextField()
+    feedback_reply = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.teacher.first_name
+    
+class NotificationTeacher(models.Model):
+    id = models.AutoField(primary_key=True)
+    teacher_id = models.ForeignKey(user_profile_teacher, on_delete=models.CASCADE)
+    message = models.TextField()
+    link = models.URLField(blank=True, null=True)
+    read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.teacher_id.first_name

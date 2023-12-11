@@ -13,6 +13,7 @@ from .signals import succesful_logout
 from reportlab.pdfgen import canvas
 import csv
 from assessment.models import *
+from django.db.models import Q,Max,Avg
 
 def student_home(request,subject_id=None):
     global absent_count
@@ -37,6 +38,7 @@ def student_home(request,subject_id=None):
     data_present = []
     data_absent = []
     subject_data = Subject.objects.filter(standard_id=student_grade)
+    subject_count=subject_data.count()
     for subject in subject_data:
         attendance = Attendance.objects.filter(id=subject.id)
         attendance_present_count = AttendanceReport.objects.filter(attendance_id__in=attendance, status=True,user=student_obj).count()
@@ -53,11 +55,20 @@ def student_home(request,subject_id=None):
     count_absent=cache.get('absent', version=user.username)
     present_count=cache.get('present', version=user.username)
 
+    average_score = Result.objects.filter(user=user).aggregate(Avg('score'))['score__avg']
+
+    if average_score is not None:
+        average_percentage = (average_score / 100) * 100
+    else:
+        average_percentage = 0
+
+
+
     unread_notifications = NotificationStudent.objects.filter(student_id=student_obj, read=False).count()
 
     context={
-        "total_attendance": len(logs),
-        "attendance_present": present_count,
+        "total_attendance": subject_count,
+        "attendance_present": average_score,
         "attendance_absent": count_absent,
         "total_subjects": total_subjects,
         "subject_name": subject_name,
@@ -182,6 +193,13 @@ def student_report(request):
     student=user_profile_student.objects.get(user=request.user)
     students=StudentResult.objects.filter(student_id=student)
     results=Result.objects.filter(user=request.user)
+
+    user = request.user  # Assuming you have access to the logged-in user
+    average_score = Result.objects.filter(user=user).aggregate(Avg('score'))['score__avg']
+
+    # Assuming the maximum possible score for each assessment is 100
+    # Calculate the average percentage
+    average_percentage = (average_score / 100) * 100
     return render(request, 'student_template/studentreport.html', {'students': students,'results':results,"profile":student})
 
 def generate_certificate(request):
@@ -258,3 +276,38 @@ def mark_notification_as_read(request, id):
     notification.read = True
     notification.save()
     return redirect('users:student_feedback')
+
+
+def leaderboard(request):
+    student=user_profile_student.objects.get(user=request.user)
+    school=student.school
+    user_grade=student.grade
+    
+    # Get the user's score
+    user_score = Result.objects.filter(
+        user=request.user
+    ).values('score').first()['score']
+
+    # Query to find the rank of the logged-in user within their grade
+    user_rank = Result.objects.filter(
+        user__user_profile_student__grade=user_grade,
+        score__gt=user_score  # Count students with higher scores
+    ).count() + 1  # Add 1 to get the user's rank
+    
+    max_results = Result.objects.values('user__user_profile_student__grade').annotate(max_score=Max('score'))
+    overall_students=Result.objects.all().order_by('-score')[:5]
+
+    # Find the top 3 leaders of the student's grade
+    grade_leaders = Result.objects.filter(
+        user__user_profile_student__grade=user_grade
+    ).order_by('-score')[:3]
+
+    return render(request, 'student_template/leadership.html', {'top_students_by_grade': grade_leaders,"overall_students":overall_students,"school":school,"user_rank":user_rank,"user_grade":user_grade})
+
+
+def subjects(request):
+    student=user_profile_student.objects.get(user=request.user)
+    grade=student.grade
+    subjects=Subject.objects.filter(standard=grade)
+
+    return render(request, "student_template/subjects.html", {"subjects":subjects})

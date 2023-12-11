@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from users.utils import activate
 from .editor_views import *
 from . import StudentViews
-from . import SchoolView
+from . import SchoolView, PrincipalView,TeacherView
 
 urlpatterns = [
     path('', views.index, name="index"),
@@ -52,6 +52,8 @@ urlpatterns = [
     path('getsubject/', StudentViews.getsubject, name="getsubject"),
     path('notification/', StudentViews.notifications, name="notification"),
     path('notification_read/<int:id>/', StudentViews.mark_notification_as_read, name="notification_read"),
+    path("student_leaderboard/",StudentViews.leaderboard, name="student_leaderboard"),
+    path("subjects/",StudentViews.subjects, name="subjects"),
 
     # URLS for School
     path('school_home/', SchoolView.school_home, name="school_home"),
@@ -68,7 +70,39 @@ urlpatterns = [
     path("leaderboard/",SchoolView.leaderboard, name="leaderboard"),
     path("student_report", SchoolView.student_report, name="student_report"),
     path("student_report_gradewise/<str:grade>/", SchoolView.student_report_gradewise, name="student_report_gradewise"),
-    path("student_detail_report/<user_id>", SchoolView.student_detail_report, name="student_detail_report")
+    path("student_detail_report/<user_id>", SchoolView.student_detail_report, name="student_detail_report"),
+
+    # URLS for principal
+    path('principal_home/', PrincipalView.principal_home, name="principal_home"),
+    path('attendance_data/', PrincipalView.student_data_view, name="attendance_data"),
+    path('attendance_data_post/', PrincipalView.student_view_data_post, name="attendance_data_post"),
+    path('pteachers_list/', PrincipalView.display_teachers, name="pteachers_list"),
+    path('psubject_list/', PrincipalView.subject_list, name="psubject_list"),
+    path('principal_profile/', PrincipalView.school_profile, name="principal_profile"),
+    path('principal_profile_update/', PrincipalView.school_profile_update, name="principal_profile_update"),
+    path('principal_feedback/', PrincipalView.school_feedback, name="principal_feedback"),
+    path('principal_feedback_save/', PrincipalView.school_feedback_save, name="principal_feedback_save"),
+    path('principal_notification/', PrincipalView.notifications, name="principal_notification"),
+    path('principal_notification_read/<int:id>/', PrincipalView.mark_notification_as_read, name="principal_notification_read"),
+    path("pleaderboard/",PrincipalView.leaderboard, name="pleaderboard"),
+    path("pstudent_report", PrincipalView.student_report, name="pstudent_report"),
+    path("pstudent_report_gradewise/<str:grade>/", PrincipalView.student_report_gradewise, name="pstudent_report_gradewise"),
+    path("pstudent_detail_report/<user_id>", PrincipalView.student_detail_report, name="pstudent_detail_report"),
+
+
+    # URLS for teacher
+    path('teacher_home/', TeacherView.teacher_home, name="teacher_home"),
+    path('tsubject_list/', TeacherView.subject_list, name="tsubject_list"),
+    path('teacher_profile/', TeacherView.teacher_profile, name="teacher_profile"),
+    path('teacher_profile_update/', TeacherView.teacher_profile_update, name="teacher_profile_update"),
+    path('teacher_feedback/', TeacherView.teacher_feedback, name="teacher_feedback"),
+    path('teacher_feedback_save/', TeacherView.teacher_feedback_save, name="teacher_feedback_save"),
+    path('teacher_notification/', TeacherView.notifications, name="teacher_notification"),
+    path('teacher_notification_read/<int:id>/', TeacherView.mark_notification_as_read, name="teacher_notification_read"),
+    path("tleaderboard/",TeacherView.leaderboard, name="tleaderboard"),
+    path("tstudent_report", TeacherView.student_report, name="tstudent_report"),
+    path("tstudent_report_gradewise/<str:grade>/", TeacherView.student_report_gradewise, name="tstudent_report_gradewise"),
+    path("tstudent_detail_report/<user_id>", TeacherView.student_detail_report, name="tstudent_detail_report")
 ]
 
 from django.conf import settings

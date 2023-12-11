@@ -3,8 +3,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
       <a href="{% url 'users:student_home' %}" class="brand-link">
-        <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
+        <i class="fa fa-home fa-fw" aria-hidden="true" style="color:#007bff; margin-left:20px;"></i>
         <span class="brand-text font-weight-light">{{user}}</span>
       </a>
       <!-- Sidebar -->
@@ -12,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            {% if profile.profile_pic %}
+              {% if profile.profile_pic %}
             <img src="{{ profile.profile_pic.url }}" class="img-circle elevation-2" alt="User Image">
             {% else %}
             <img src="/static/Images/1.png" class="img-circle elevation-2" alt="User Image">
@@ -22,6 +21,7 @@
             <a href="{% url 'users:student_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
           </div>
         </div>
+
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -45,7 +45,6 @@
                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>
                   View Attendance
-                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
                 </p>
               </a>
             </li>
@@ -55,7 +54,7 @@
               <a href="{{ student_view_result }}" class="nav-link {% if request.path == student_view_result %} active {% endif %}">
                 <i class="nav-icon fas fa-tasks"></i>
                 <p>
-                  View Result
+                  My Assessments
                   {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
                 </p>
               </a>
@@ -66,19 +65,7 @@
               <a href="{{ student_feedback }}" class="nav-link {% if request.path == student_feedback %} active {% endif %}">
                 <i class="nav-icon fas fa-comments"></i>
                 <p>
-                  Send Feedback
-                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
-                </p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              {% url 'users:student_certificate' as student_certificate %}
-              <a href="{{ student_certificate }}" class="nav-link {% if request.path == student_certificate %} active {% endif %}">
-                <i class="nav-icon fas fa-comments"></i>
-                <p>
-                  Get Certificate
-                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                  Communication
                 </p>
               </a>
             </li>
@@ -87,7 +74,12 @@
               <a href="{{ start_assessment }}" class="nav-link {% if request.path == start_assessment %} active {% endif %}">
                 <i class="nav-icon fas fa-solid fa-tablet"></i>
                 <p>
+<<<<<<< HEAD
                   Start Test
+=======
+                  Take Assessment
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+>>>>>>> 5ee7f08016b6875cc14e370a072c9c5a95659809
                 </p>
               </a>
             </li> {% endcomment %}
@@ -101,6 +93,7 @@
               </a>
               {% endif %}
             </li>
+
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
