@@ -28,5 +28,11 @@ admin.site.register(UserLoginActivity)
 admin.site.register(DemoBooking)
 admin.site.register(StudentInnovativeProject)
 admin.site.register(School)
+<<<<<<< HEAD
 admin.site.register(NotificationPrincipal)
 admin.site.register(FeedBackPrincipal)
+=======
+
+admin.site.register(NotificationPrincipal)
+admin.site.register(FeedBackPrincipal)
+>>>>>>> 210ddc5 (commit all)
