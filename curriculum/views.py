@@ -55,6 +55,7 @@ class LessonDetailView(DetailView,FormView):
     context_object_name = 'lessons'
     model = Lesson
     template_name = 'curriculum/lesson_detail_view.html'
+    
     form_class = CommentForm
     second_form_class = ReplyForm
 

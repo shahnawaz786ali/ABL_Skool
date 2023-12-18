@@ -83,9 +83,10 @@ class Lesson(models.Model):
     name = models.CharField(max_length=250)
     position = models.PositiveSmallIntegerField(verbose_name="Chapter no.")
     slug = models.SlugField(null=True, blank=True)
-    video = models.FileField(upload_to=save_lesson_files,verbose_name="Video", blank=True, null=True)
+    # video = models.FileField(upload_to=save_lesson_files,verbose_name="Video", blank=True, null=True)
     ppt = models.FileField(upload_to=save_lesson_files,verbose_name="Presentations", blank=True)
     assessment=models.URLField(verbose_name="Assessment", max_length=300,default="")
+    video=models.URLField(verbose_name="Videos", max_length=300,default="")
     Notes = models.FileField(upload_to=save_lesson_files,verbose_name="Notes", blank=True)
 
     class Meta:

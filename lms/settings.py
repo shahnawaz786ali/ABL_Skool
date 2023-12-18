@@ -32,6 +32,8 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL ='users.User'
 # Application definition
 
+# YOUTUBE_API_KEY = os.environ.get('AIzaSyA-27JTrsqalFXT-OO6yHfH_TfKCRPKliU')
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     # 'users.middleware.UserActivityMiddleware'
 ]
 

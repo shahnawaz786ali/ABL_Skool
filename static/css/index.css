@@ -148,7 +148,7 @@ header{
 .testimonials{
     background: linear-gradient(to bottom, #000428, #004683);
     animation: background-color 20s;
-    min-height: 80vh;
+    min-height: 50vh;
 }
 
 .testimonials h2{

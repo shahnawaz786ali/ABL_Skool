@@ -257,3 +257,58 @@ def payment_view(request):
 
     # Handle other HTTP methods or invalid requests
     return JsonResponse({'message': 'Invalid request'}, status=405)  # Method Not Allowed
+
+
+from googleapiclient.discovery import build
+
+def playlist_view(request):
+    youtube = build('youtube', 'v3', developerKey='AIzaSyA-27JTrsqalFXT-OO6yHfH_TfKCRPKliU')
+    playlist_id = 'PLsI8TiQwbLKjin9kw7NwDe3nOakis2vuu'  # Replace with your actual playlist ID
+
+    if request.method == 'GET':
+        user_agent = request.META.get('HTTP_USER_AGENT')
+        request = youtube.playlistItems().list(
+            part='snippet',
+            playlistId=playlist_id,
+            maxResults=10  # Number of items to retrieve
+        )
+        response = request.execute()
+        playlist_items = response['items']
+
+        return render(request, 'users/youtube_video.html', {'playlist_items': playlist_items})
+    
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+def playlist_view(request):
+    # Replace 'YOUR_API_KEY' with your actual YouTube Data API key
+    api_key = 'AIzaSyA-27JTrsqalFXT-OO6yHfH_TfKCRPKliU'
+    playlist_id = 'PLsI8TiQwbLKjin9kw7NwDe3nOakis2vuu'  # Replace with the desired playlist ID
+
+    # Initialize the YouTube Data API service
+    youtube = build('youtube', 'v3', developerKey=api_key)
+
+    try:
+        # Request playlist items
+        playlist_items_request = youtube.playlistItems().list(
+            part='snippet',
+            playlistId=playlist_id,
+            maxResults=10  # Number of playlist items to retrieve (adjust as needed)
+        )
+        playlist_items_response = playlist_items_request.execute()
+
+        # Extract playlist items
+        playlist_items = playlist_items_response.get('items', [])
+
+        # Pass the playlist items to the template
+        return render(request, 'users/youtube_video.html', {'playlist_items': playlist_items})
+
+    except HttpError as e:
+        error_message = f'HttpError occurred: {e}'
+
+def playlist(request):
+    user=User.objects.get(username=request.user)
+    students=user_profile_student.objects.get(user=user)
+    grade=students.grade
+    lessons=Lesson.objects.filter(Standard=grade)
+    return render(request, 'users/playlist.html',{'lessons':lessons})

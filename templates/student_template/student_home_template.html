@@ -10,8 +10,6 @@
 
 <section class="content">
         <div class="container-fluid">
-
-            {% comment %} Boxes Section Starts {% endcomment %}
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
@@ -81,7 +79,6 @@
                 </div>
                 <!-- ./col -->
             </div>
-            {% comment %} Boxes Section Ends {% endcomment %}
 
             <div class="row">
                 <div class="col-lg-6">
@@ -111,36 +108,5 @@
   {% endblock main_content %}
 
   {% block custom_js %}
-    <script>
-       $(document).ready(function(){
-           //Code for Pie Chart
-            var pieData        = {
-            labels: [
-                'ABSENT', 
-                'PRESENT', 
-            ],
-            datasets: [
-                {
-                data: [{{ attendance_absent }}, {{ attendance_present }}],
-                backgroundColor : ['#f56954', '#00a65a'],
-                }
-            ]
-            }
-           //Code for Pie Chart
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieData        = pieData;
-            var pieOptions     = {
-            maintainAspectRatio : false,
-            responsive : true,
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            var pieChart = new Chart(pieChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: pieOptions      
-            })
 
-       })
-    </script>
   {% endblock custom_js %}

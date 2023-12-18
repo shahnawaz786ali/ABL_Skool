@@ -38,6 +38,8 @@ urlpatterns = [
     # path('student_profile/',student_home, name="student_dashboard"),
     path('enquiry',views.enquiry, name="enquiry"),
     path('message',views.message, name="message"),
+    path('playlist/', views.playlist_view, name='playlist_view'),
+    path('playlist_new/', views.playlist, name='playlist_view_new'),
     
     # URSL for Student
     path('student_home/', StudentViews.student_home, name="student_home"),

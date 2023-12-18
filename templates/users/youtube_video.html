@@ -1,0 +1,20 @@
+<!-- your_template.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Playlist</title>
+</head>
+<body>
+    <h1>YouTube Playlist</h1>
+    <ul>
+        {% for item in playlist_items %}
+            <li>
+                <a href="https://www.youtube.com/watch?v={{ item.snippet.resourceId.videoId }}">
+                    {{ item.snippet.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
